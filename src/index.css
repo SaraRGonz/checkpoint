@@ -1,1 +1,77 @@
 @import "tailwindcss";
+
+@theme {
+
+    /* ---- THEME COLORS ---- */
+    --color-text: #ffffff;
+    --color-background: #0B1026;
+    --color-primary: #00D1FF;
+    --color-secondary: #00FFA3;
+    --color-tertiary: #A259FF;
+    --color-accent: #FFD166;
+
+
+    /* ---- BADGE COLORS ---- */
+    /* Default badge */
+    --color-badge-default: #545454;
+    --color-badge-bgdefault: #dfdfdf;
+    /* Wishlist badge */
+    --color-badge-wishlist: #6d044c;
+    --color-badge-bgwishlist: #ff82d8;
+    /* Backlog badge */
+    --color-badge-backlog: #330b74;
+    --color-badge-bgbacklog: #a876fa;
+    /* Playing badge */
+    --color-badge-playing: #054c5b;
+    --color-badge-bgplaying: #13b9dd;
+    /* Completed badge */
+    --color-badge-completed: #244004;
+    --color-badge-bgcompleted: #8dcf43;
+    /* Dropped badge */
+    --color-badge-dropped: #540c0c;
+    --color-badge-bgdropped: #d84e4e;
+
+
+    /* ---- BUTTON COLORS ---- */
+    /* Primary color */
+    --color-primarybutton-text: #ffffff;
+    --color-primarybutton-bg: #c719e4;
+    --color-primarybutton-bghover: #ea67ff;
+    --color-primarybutton-bgactive: #701080;
+    /* Secondary color */
+    --color-secondarybutton-text: #ffffff;
+    --color-secondarybutton-bg: #5815c6;
+    --color-secondarybutton-bghover: #9656ff;
+    --color-secondarybutton-bgactive: #3b0f82;
+    /* Danger color */
+    --color-dangerbutton-text: #ffffff;
+    --color-dangerbutton-bg: #d81857;
+    --color-dangerbutton-bghover: #ff5089;
+    --color-dangerbutton-bgactive: #820d34;
+
+
+    /* ---- STAR RATING COLORS ---- */
+    --color-filledstar: #ffe55f;
+    --color-emptystar: #a2bec4;
+
+
+    /* ---- SEARCH INPUT COLORS ---- */
+    /* Icon color */
+    --color-searchinput-icon: #ffffff;
+    /* Input colors */
+    --color-searchinput-bg: #A259FF;
+    --color-searchinput-placeholder: #ffffff;
+    /* Focus colors */
+    --color-searchinput-focusborder: #dfdfdf;
+    --color-searchinput-focusplaceholder: #dfdfdf;
+
+    /* ---- ERROR MESSAGE ----*/
+    --color-errorbg: #fef2f2;
+    --color-errortext: #d81857;
+    --color-erroraccent: #820d34;
+
+}
+
+body {
+  background-color: var(--color-background); 
+}
