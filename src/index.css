@@ -9,69 +9,77 @@
     --color-secondary: #00FFA3;
     --color-tertiary: #A259FF;
     --color-accent: #FFD166;
+    
+    --color-danger: #d81857;
+    --color-gray: #dfdfdf;
 
 
     /* ---- BADGE COLORS ---- */
     /* Default badge */
     --color-badge-default: #545454;
-    --color-badge-bgdefault: #dfdfdf;
+    --color-badge-bgdefault: var(--color-gray);
     /* Wishlist badge */
     --color-badge-wishlist: #6d044c;
     --color-badge-bgwishlist: #ff82d8;
     /* Backlog badge */
     --color-badge-backlog: #330b74;
-    --color-badge-bgbacklog: #a876fa;
+    --color-badge-bgbacklog: var(--color-tertiary);
     /* Playing badge */
     --color-badge-playing: #054c5b;
-    --color-badge-bgplaying: #13b9dd;
+    --color-badge-bgplaying: var(--color-primary);
     /* Completed badge */
     --color-badge-completed: #244004;
-    --color-badge-bgcompleted: #8dcf43;
+    --color-badge-bgcompleted: var(--color-secondary);
     /* Dropped badge */
-    --color-badge-dropped: #540c0c;
-    --color-badge-bgdropped: #d84e4e;
+    --color-badge-dropped: #570822;
+    --color-badge-bgdropped: var(--color-danger);
 
 
     /* ---- BUTTON COLORS ---- */
     /* Primary color */
-    --color-primarybutton-text: #ffffff;
-    --color-primarybutton-bg: #c719e4;
-    --color-primarybutton-bghover: #ea67ff;
-    --color-primarybutton-bgactive: #701080;
+    --color-primarybutton-text: var(--color-text);
+    --color-primarybutton-bg: var(--color-primary);
+    --color-primarybutton-bghover: #6ae4ff;
+    --color-primarybutton-bgactive: #0e9dbd;
     /* Secondary color */
-    --color-secondarybutton-text: #ffffff;
-    --color-secondarybutton-bg: #5815c6;
-    --color-secondarybutton-bghover: #9656ff;
-    --color-secondarybutton-bgactive: #3b0f82;
+    --color-secondarybutton-text: var(--color-text);
+    --color-secondarybutton-bg: var(--color-secondary);
+    --color-secondarybutton-bghover: #59ffc3;
+    --color-secondarybutton-bgactive: #05bf7c;
     /* Danger color */
-    --color-dangerbutton-text: #ffffff;
-    --color-dangerbutton-bg: #d81857;
+    --color-dangerbutton-text: var(--color-text);
+    --color-dangerbutton-bg: var(--color-danger);
     --color-dangerbutton-bghover: #ff5089;
     --color-dangerbutton-bgactive: #820d34;
 
 
     /* ---- STAR RATING COLORS ---- */
-    --color-filledstar: #ffe55f;
-    --color-emptystar: #a2bec4;
+    --color-filledstar: var(--color-accent);
+    --color-emptystar: var(--color-badge-bgdefault);
 
 
     /* ---- SEARCH INPUT COLORS ---- */
     /* Icon color */
-    --color-searchinput-icon: #ffffff;
+    --color-searchinput-icon: var(--color-text);
     /* Input colors */
-    --color-searchinput-bg: #A259FF;
-    --color-searchinput-placeholder: #ffffff;
+    --color-searchinput-bg: var(--color-tertiary);
+    --color-searchinput-placeholder: var(--color-text);
     /* Focus colors */
-    --color-searchinput-focusborder: #dfdfdf;
-    --color-searchinput-focusplaceholder: #dfdfdf;
+    --color-searchinput-focusborder: var(--color-gray);
+    --color-searchinput-focusplaceholder: var(--color-gray);
 
     /* ---- ERROR MESSAGE ----*/
     --color-errorbg: #fef2f2;
-    --color-errortext: #d81857;
-    --color-erroraccent: #820d34;
+    --color-errortext: var(--color-danger);
+    --color-erroraccent: var(--color-dangerbutton-bgactive);
 
 }
 
 body {
-  background-color: var(--color-background); 
+    background-color: var(--color-background); 
+}
+
+.light {
+    --color-background: #F3F4F6;
+    --color-text: #111827;
 }
