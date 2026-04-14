@@ -1,0 +1,18 @@
+[
+  {
+    "title": "Prueba 1",
+    "platform": "PC",
+    "status": "Backlog",
+    "coverUrl": "https://coltonconcrete.co.uk/wp-content/uploads/2021/10/placeholder1.jpg",
+    "id": "8c2099d3-61f7-41e0-9891-7291b4485b9a",
+    "addedAt": "2026-04-14T13:11:24.536Z"
+  },
+  {
+    "title": "Prueba 2",
+    "platform": "PC",
+    "status": "Backlog",
+    "coverUrl": "https://coltonconcrete.co.uk/wp-content/uploads/2021/10/placeholder1.jpg",
+    "id": "563072f6-84aa-4035-b62f-54f89e51544b",
+    "addedAt": "2026-04-14T13:11:32.050Z"
+  }
+]
