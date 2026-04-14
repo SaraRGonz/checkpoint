@@ -19,25 +19,30 @@ export function AddGamePage() {
     const [error, setError] = useState<string | null>(null);
 
     // función que se ejecuta al enviar el formulario
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault(); // evita que la página se recargue 
 
-        // Validación básica
+        // validación básica
         if (title.trim() === '') {
             setError('The title is required.');
             return;
         }
 
-        // si pasa la validación, crea el objeto sin ID, el Contexto se lo pone
-        addGame({
-            title,
-            platform,
-            status,
-            coverUrl: 'https://coltonconcrete.co.uk/wp-content/uploads/2021/10/placeholder1.jpg', // placeholder de que no hay imagen
-        });
-
-        // redirige al usuario a la biblioteca una vez que se añade
-        navigate('/library');
+        // si pasa la validación crea el objeto sin ID, el Contexto se lo pone
+        try {
+            // añade el await, el frontend espera a que el backend guarde el JSON
+            await addGame({
+                title,
+                platform,
+                status,
+                coverUrl: 'https://coltonconcrete.co.uk/wp-content/uploads/2021/10/placeholder1.jpg', // placeholder de que no hay imagen
+            });
+            // redirige al usuario a la biblioteca una vez que se añade
+            navigate('/library');
+        } catch (err) {
+            // si el servidor está apagado o falla muestra el error sin cambiar de página
+            setError('Error de red al guardar el juego.');
+        }
     };
 
     return (

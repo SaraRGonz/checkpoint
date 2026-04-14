@@ -4,30 +4,33 @@ import { StarRating } from '../ui/StarRating';
 
 interface GameCardProps {
     game: Game; // se indica que va a recibir un objeto con forma de 'Game'
+    showDetails?: boolean; // opcional para ocultar los detalles cuando se esté buscando un juego
 }
 
-export function GameCard({ game }: GameCardProps) {
+export function GameCard({ game, showDetails = true }: GameCardProps) {
     return (
         <div className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-            {/* Carátula */}
+            {/* carátula */}
             <img src={game.coverUrl} alt={game.title} className="w-full h-48 object-cover" />
             
             <div className="p-4">
-                {/* Título */}
-                <h3 className="font-bold text-lg mb-2">{game.title}</h3>
-                
-                {/* Badges y Estrellas */}
-                <div className="flex justify-between items-center mt-4">
-                    {/* Badge */}
-                    {/* pasa el texto de la plataforma (ej: "PS5") como 'children' */}
-                    <Badge variant="default">
-                        {game.platform}
-                    </Badge>
+                {/* título */}
+                <h3 className="font-bold text-lg mb-2 text-text">{game.title}</h3>
 
-                    {/* StarRating */}
-                    {/* pasa el número de la puntuación (ej: 4) a la prop 'rating' */}
-                    <StarRating rating={game.rating} />
-                </div>
+                {/* badges y estrellas (solo se renderizan si showDetails es true) */}
+                {showDetails && (
+                    <div className="flex justify-between items-center mt-auto pt-4">
+                        {/* badge */}
+                        {/* pasa el texto de la plataforma (ej: "PS5") como 'children' */}
+                        <Badge variant="default">
+                            {game.platform}
+                        </Badge>
+
+                        {/* starRating */}
+                        {/* pasa el número de la puntuación (ej: 4) a la prop 'rating' */}
+                        <StarRating rating={game.rating || 0} />
+                    </div>
+                )}
             </div>
         </div>
     );
