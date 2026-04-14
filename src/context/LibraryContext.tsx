@@ -1,23 +1,22 @@
 import { createContext, useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
 import type { Game } from '../types/game';
-
+import { fetchApi } from '../api/client'; 
 
 // le dice a TypeScript qué datos y funciones van a vivir dentro del contexto global
 interface LibraryContextType {
-    // La lista completa de juegos que el usuario ha guardado
+    // la lista completa de juegos que el usuario ha guardado
     games: Game[];
 
-    // función para añadir que usa Omit<Game, 'id'> porque cuando el usuario rellena el formulario 
-    // el juego aún no tiene ID, se lo inventa la aplicación al guardarlo
-    addGame: (game: Omit<Game, 'id'>) => void; 
+    // las funciones devuelven una Promesa, ya que son peticiones de red (asíncronas)
+    // función para añadir que usa Omit<Game, 'id'> porque el ID lo genera el servidor
+    addGame: (game: Omit<Game, 'id'>) => Promise<void>; 
     
     // función para editar que recibe el ID del juego a cambiar y un Partial<Game> 
-    // si solo cambia la nota, le pasa { rating: 5 } y no todo el juego.
-    updateGame: (id: string, updates: Partial<Game>) => void;
+    updateGame: (id: string, updates: Partial<Game>) => Promise<void>;
     
-    // función para borrar que solo necesita saber el ID único del juego a destruir.
-    deleteGame: (id: string) => void;
+    // función para borrar que solo necesita saber el ID único del juego a destruir
+    deleteGame: (id: string) => Promise<void>;
     
     // estados para saber si la app está cargando o si ha habido un error
     isLoading: boolean;
@@ -25,7 +24,6 @@ interface LibraryContextType {
 }
 
 // createContext instancia el contexto de React
-// se utiliza 'undefined' como valor inicial porque al principio no hay datos, se inyectan en tiempo de ejecución
 export const LibraryContext = createContext<LibraryContextType | undefined>(undefined);
 
 // el componente proveedor es el componente físico que envuelve a toda la aplicación 
@@ -33,77 +31,99 @@ export const LibraryContext = createContext<LibraryContextType | undefined>(unde
 export function LibraryProvider({ children }: { children: ReactNode }) {
     
     // el estado local, la memoria de la app
-    // games: la variable que guarda la lista actual
-    // setGames: la única función capaz de modificar esa lista 
-    // useState<Game[]>([]) es una lista de juegos y que arranca vacía []
     const [games, setGames] = useState<Game[]>([]);
     
-    // añade los estados para la carga y los errores para cumplir con TypeScript
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    // estados para saber si la app está cargando o si ha habido un error
+    // empiexza en true porque hay que traer los datos del server nada más arrancar
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
-    // efecto de lectura
-    // se ejecuta solo una vez al montar el componente debido al array de dependencias vacío []
-    // recupera la colección persistida en localStorage de la sesión anterior
+    // EFECTO DE LECTURA (GET) sustituye a la lectura del LocalStorage
+    // se ejecuta al montar el componente para traer la biblioteca del servidor
     useEffect(() => {
-        setIsLoading(true); // avisa a la app que esta cargando
-        
-        // lee el string JSON almacenado en localStorage bajo la clave 'checkpoint-games'
-        const savedGames = localStorage.getItem('checkpoint-games');
-        
-        if (savedGames) {
+        const loadGames = async () => {
             try {
-                // localStorage solo guarda texto puro
-                // JSON.parse lo convierte en un array de objetos JavaScript y setGames lo mete en la memoria 
-                setGames(JSON.parse(savedGames));
-            } catch (error) {
-                // manejo de errores en caso de que el JSON del localStorage esté malformado o corrupto
-                console.error("Error reading saved games", error);
-                setError("Could not load saved games.");
+                setIsLoading(true);
+                setError(null);
+                // el backend devuelve { data: Game[], total: number } y se tipa así
+                const result = await fetchApi<{ data: Game[] }>('/library');
+                // actualizamos la memoria de la app con los datos reales del servidor
+                setGames(result.data);
+            } catch (err: any) {
+                // manejo de errores en caso de que falle la carga inicial
+                setError(err.message || 'Error al cargar la biblioteca desde el servidor');
+            } finally {
+                setIsLoading(false);
             }
-        }
-        setIsLoading(false); // termina de cargar
+        };
+
+        loadGames();
     }, []); 
 
 
-    // efecto de escritura
-    // se ejecuta cada vez que el estado 'games' se modifica
-    // cada cambio persiste inmediatamente en localStorage
-    useEffect(() => {
-        // pasa el estado a un string JSON y lo guarda en el navegador, sobreescribiendo localStorage
-        localStorage.setItem('checkpoint-games', JSON.stringify(games));
-    }, [games]); 
+    // MÉTODOS DE MUTACIÓN (POST, PUT, DELETE)
 
-
-    // métodos de mutación del estado
-
-    // añadir juego
-    const addGame = (newGameData: Omit<Game, 'id'>) => {
-        // crea el juego completo uniendo los datos del formulario (...newGameData)
-        // y le genera un identificador único usando crypto.randomUUID().
-        const newGame: Game = {
-            ...newGameData,
-            id: crypto.randomUUID(),
-        };
-        
-        // actualiza el estado, 'prevGames' representa la lista un milisegundo antes
-        // devuelve un array nuevo con todos los juegos viejos (...prevGames) y mete el nuevo al final
-        setGames((prevGames) => [...prevGames, newGame]);
+    // añadir juego (POST)
+    const addGame = async (newGameData: Omit<Game, 'id'>) => {
+        try {
+            setIsLoading(true);
+            setError(null);
+            // el servidor recibe los datos y devuelve el juego ya con su ID creado
+            const savedGame = await fetchApi<Game>('/library', {
+                method: 'POST',
+                body: JSON.stringify(newGameData)
+            });
+            
+            // actualiza el estado añadiendo a la lista el juego que ha confirmado el servidor
+            setGames((prevGames) => [...prevGames, savedGame]);
+        } catch (err: any) {
+            setError(err.message || 'Error al añadir el juego');
+            throw err; // lanza el error por si el componente quiere reaccionar
+        } finally {
+            setIsLoading(false);
+        }
     };
 
-    // actualizar juego
-    const updateGame = (id: string, updates: Partial<Game>) => {
-        // .map() recorre el array. Si el ID coincide con el que se quiere editar, 
-        // fusiona los datos viejos con los nuevos (...updates). Si no coincide, vuelve al original
-        setGames((prevGames) => 
-            prevGames.map(game => game.id === id ? { ...game, ...updates } : game)
-        );
+    // actualizar juego (PUT)
+    const updateGame = async (id: string, updates: Partial<Game>) => {
+        try {
+            setIsLoading(true);
+            setError(null);
+            // avisa al servidor del cambio y devuelve el objeto juego actualizado
+            const updatedGame = await fetchApi<Game>(`/library/${id}`, {
+                method: 'PUT',
+                body: JSON.stringify(updates)
+            });
+
+            // .map() recorre el array. Si el ID coincide inyecta la respuesta del servidor (updatedGame)
+            // si no coincide mantiene el juego original sin cambios
+            setGames((prevGames) => 
+                prevGames.map(game => game.id === id ? updatedGame : game)
+            );
+        } catch (err: any) {
+            setError(err.message || 'Error al actualizar el juego');
+            throw err;
+        } finally {
+            setIsLoading(false);
+        }
     };
 
-    // borrar juego
-    const deleteGame = (id: string) => {
-        // usa .filter() para crear un array nuevo que excluye el juego con el ID que coincide con el parámetro (el juego borrado)
-        setGames((prevGames) => prevGames.filter(game => game.id !== id));
+    // borrar juego (DELETE)
+    const deleteGame = async (id: string) => {
+        try {
+            setIsLoading(true);
+            setError(null);
+            // petición al servidor para eliminar el recurso físicamente
+            await fetchApi(`/library/${id}`, { method: 'DELETE' });
+            
+            // si el servidor confirma el borrado usa .filter() para quitarlo de la lista local
+            setGames((prevGames) => prevGames.filter(game => game.id !== id));
+        } catch (err: any) {
+            setError(err.message || 'Error al borrar el juego');
+            throw err;
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     // renderizado del proveedor
