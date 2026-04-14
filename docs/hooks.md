@@ -61,12 +61,12 @@ Se usa tanto en `LibraryContext` para almacenar el array de juegos (`games`) y l
 
 ### `useEffect`; Efectos secundarios
 
-Hacen que se pueda sincronizar el estado de React con sistemas externos como el `localStorage` del navegador.
+Hacen que se pueda sincronizar el estado de React con sistemas externos como peticiones asíncronas a una API o el `localStorage` del navegador.
 
-En `LibraryContext` se usan dos efectos de dos formas distintas:
+En la app se usan los efectos de la siguiente manera:
 
-- El primero se ejecuta solo una vez cuando se monta el componente (array vacío `[]`) y lee los juegos guardados en `localStorage` para cargarlos en el estado
-- El segundo vigila el array de `games[]` y cada vez que cambia actualiza `localStorage` para mantener los datos persistidos
+- **En `LibraryContext`:** Se ejecuta solo una vez cuando se monta el componente gracias al array de dependencias vacío `[]`. Su función es ejecutar una llamada asíncrona (`fetchApi`) al backend Node.js para recuperar la lista de juegos del usuario (GET) y cargarla en el estado local.
+- **En `ThemeContext`:** Vigila la variable del tema y cada vez que cambia sincroniza la preferencia visual del usuario guardándola en el `localStorage`.
 
 ---
 

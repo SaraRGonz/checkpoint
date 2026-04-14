@@ -29,7 +29,9 @@ export const LibraryContext = createContext<LibraryContextType | undefined>(unde
 
 ### 2. Componente Provider
 
-Es lo que envuelve la aplicación y hace de contenedor del estado. Usa `useState` para mantener los datos en memoria y `useEffect` para sincronizarlos con `localStorage`. Todo lo que esté dentro del Provider puede acceder al estado a través de la propiedad `value`.
+Es lo que envuelve la aplicación y hace de contenedor del estado. Usa `useState` para mantener los datos en memoria y `useEffect` para para hacer la carga inicial comunicándose con el backend de Node.js mediante peticiones HTTP usando el cliente tipado `fetchApi`. 
+
+Las funciones de mutación (añadir, editar, borrar) también se comunican con la API para mantener sincronizada la base de datos real con el estado de la UI. Todo lo que esté dentro del Provider puede acceder al estado a través de la propiedad `value`.
 
 ```tsx
 <LibraryContext.Provider value={{ games, addGame, updateGame, deleteGame, isLoading, error }}>
