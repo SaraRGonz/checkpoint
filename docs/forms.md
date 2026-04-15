@@ -26,14 +26,18 @@ const [title, setTitle] = useState('');
 
 ---
 
-## Validación antes de guardar
+## Validación de datos
 
-Antes de enviar los datos al Context Global se hace una validación en el cliente para proteger la integridad de los datos de `localStorage`:
+Para que no haya problemas con la integridad de los datos la aplicación tiene una doble verificación.
 
+### Validación en el cliente
 - **`e.preventDefault()`:** Siempre se llama al inicio del `onSubmit` para que el navegador no recargue la página al enviar el formulario.
-- **Comprobaciones básicas:** Se comprueba que los campos obligatorios no estén vacíos (por ejemplo, con `title.trim() === ''`).
+- **Comprobaciones básicas:** Se comprueba que los campos obligatorios no estén vacíos (por ejemplo, con `title.trim() === ''`) para no hacer llamadas al servidor innecesarias.
 - **Feedback visual:** Si algo falla se interrumpe la ejecución y se actualiza un estado de error que renderiza el componente `ErrorMessage` para avisar al usuario del error.
 
+### Validación en el servidor con Zod
+El frontend tiene su propia validación pero la API backend es la fuente de verdad. 
+El middleware `validate.ts` comprueba el body con un esquema de reglas estrictas y si alguien intenta saltarse la validación que hay en el frontend, el backend responderá con un error `400 VALIDATION_ERROR` detallado.
 ---
 
 ## Componentes UI utilizados en formularios

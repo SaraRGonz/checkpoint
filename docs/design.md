@@ -221,8 +221,9 @@ El archivo `src/api/client.ts` actúa como puente entre el frontend y el servido
 
 El servidor está construido con Node.js y Express, y se organiza en tres capas con responsabilidades diferenciadas:
 
-- **Rutas (Routes):** Punto de entrada de cada petición HTTP. Definen qué URLs escucha el servidor y hacia dónde dirigen el tráfico.
-- **Controladores (Controllers):** Reciben la petición, validan que los datos sean correctos y preparan la respuesta que se devolverá al cliente.
+- **Middlewares:** Interceptan peticiones a nivel global o de ruta y se encargan de centralizar la validación de datos con Zod y el manejo de errores para no repetir código.
+- **Rutas (Routes):** Punto de entrada de cada petición HTTP. Definen qué URLs escucha el servidor y hacia dónde dirigen el tráfico aplicando los middlewares necesarios.
+- **Controladores (Controllers):** Reciben la petición, validan que los datos sean correctos y preparan la respuesta que se devolverá al cliente o envían los errores al middleware global.
 - **Servicios (Services):** Ejecutan la lógica de negocio real, es decir, el trabajo concreto que hay que hacer con los datos.
 
 Dentro del servidor hay dos flujos operativos independientes: Uno para gestionar la colección privada del usuario y otro para consultar información pública de videojuegos.

@@ -115,20 +115,37 @@ Consigue los detalles completos de un juego usando su ID de RAWG, incluída la d
 
 ## 3. Manejo de errores
 
-Todos los errores que pueda devolver la API se devuelven siempre en el mismo formato independientemente de su origen.
+Todos los errores que pueda devolver la API se devuelven siempre en el mismo formato independientemente de su origen, gestionados por un `errorHandler` global.
 
 ```json
 {
   "error": {
     "code": "BAD_REQUEST",
-    "message": "El parámetro de búsqueda 'q' es obligatorio"
+    "message": "Search parameter 'q' is required"
+  }
+}
+```
+
+### Error de Validación 
+
+Si falla la validación de un body, por ejemplo en un POST o PUT, la API devuelve un código `VALIDATION_ERROR` y un array de detalles para saber exactamente qué campos acaban de fallar.
+
+```json
+{
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "Invalid data provided",
+    "details": [
+      { "field": "body.title", "message": "Title is required" },
+      { "field": "body.platform", "message": "Platform is required" }
+    ]
   }
 }
 ```
 
 | Código HTTP | Cuándo se devuelve |
 |:---|:---|
-| `400 Bad Request` | Faltan campos obligatorios o el body está mal formado. |
-| `404 Not Found` | El recurso solicitado no existe en la biblioteca. |
-| `500 Internal Server Error` | Fallo al leer o escribir el archivo JSON local. |
+| `400 Bad Request` | Faltan campos obligatorios, el body está mal formado o no pasa la validación de Zod. |
+| `404 Not Found` | El recurso solicitado no existe en la biblioteca o es una ruta desconocida. |
+| `500 Internal Server Error` | Fallo al leer o escribir el archivo JSON local o un fallo no controlado. |
 | `502 Bad Gateway` | RAWG no responde o devuelve un error. |

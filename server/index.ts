@@ -20,7 +20,7 @@ app.get('/api/health', (req, res) => {
 // conecta la ruta base /api/v1/library con el archivo de rutas
 app.use('/api/v1/library', libraryRoutes);
 app.use('/api/v1/games', gamesRoutes);
-app.use(errorHandler);
+app.use(errorHandler); 
 
 // arrancar el servidor
 app.listen(PORT, () => {
