@@ -4,6 +4,8 @@ import { useLibrary } from '../hooks/useLibrary';
 import { Button } from '../components/ui/Button';
 import { ErrorMessage } from '../components/ui/ErrorMessage';
 import type { GameStatus } from '../types/game';
+import { StatusSelector } from '../components/game/StatusSelector';
+import { PLATFORM_LIST } from '../utils/constants';
 
 export function AddGamePage() {
     // trae la función para añadir juegos del Contexto y la de navegar de Router
@@ -80,36 +82,19 @@ export function AddGamePage() {
                         onChange={(e) => setPlatform(e.target.value)}
                         className="w-full bg-gray-900 border border-gray-700 rounded-md p-3 text-white focus:border-primary focus:outline-none"
                     >
-                        <option value="PC">PC</option>
-                        <option value="PS5">PlayStation 5</option>
-                        <option value="PS4">PlayStation 4</option>
-                        <option value="Switch">Nintendo Switch</option>
-                        <option value="Xbox Series">Xbox Series X/S</option>
-                        <option value="Retro">Retro</option>
-                        <option value="Retro">Other</option>
+                        {PLATFORM_LIST.map((p) => (
+                            <option key={p} value={p}>{p}</option>
+                        ))}
                     </select>
                 </div>
 
                 {/* campo estado */}
-                <div>
-                    <label htmlFor="status" className="block text-sm font-medium text-gray-300 mb-2">
-                        Current Status
-                    </label>
-                    <select
-                        id="status"
-                        value={status}
-                        onChange={(e) => setStatus(e.target.value as GameStatus)}
-                        className="w-full bg-gray-900 border border-gray-700 rounded-md p-3 text-white focus:border-primary focus:outline-none"
-                    >
-                        <option value="Wishlist">Wishlist</option>
-                        <option value="Backlog">Backlog</option>
-                        <option value="Playing">Playing</option>
-                        <option value="Completed">Completed</option>
-                        <option value="Dropped">Dropped</option>
-                    </select>
-                </div>
+                <StatusSelector 
+                    value={status} 
+                    onChange={setStatus} 
+                />
 
-                {/* botón de envío usando el componente UI */}
+                {/* botón de envío */}
                 <div className="pt-4">
                     <Button type="submit" variant="primary">
                         Save Game

@@ -1,17 +1,5 @@
 import { fetchApi } from './client';
-
-export interface RawgSearchResult {
-    rawgId: number;
-    title: string;
-    coverUrl: string;
-    releaseYear?: number;
-    genres: string[];
-}
-
-export interface SearchResponse {
-    results: RawgSearchResult[];
-    count: number;
-}
+import type { SearchResponse } from '../types/rawg';
 
 // buscar juegos
 export const searchGamesInRawg = (query: string) => {

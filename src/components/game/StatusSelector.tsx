@@ -1,19 +1,11 @@
 import type { GameStatus } from '../../types/game';
+import { STATUS_LIST } from '../../utils/constants';
 
 interface StatusSelectorProps {
     value: GameStatus;
     onChange: (newStatus: GameStatus) => void;
     disabled?: boolean;
 }
-
-// mapea los estados a etiquetas
-const STATUS_OPTIONS: { value: GameStatus; label: string }[] = [
-    { value: 'Wishlist', label: 'Wishlist' },
-    { value: 'Backlog', label: 'Backlog' },
-    { value: 'Playing', label: 'Currently Playing' },
-    { value: 'Completed', label: 'Completed' },
-    { value: 'Dropped', label: 'Dropped' },
-];
 
 export function StatusSelector({ value, onChange, disabled = false }: StatusSelectorProps) {
     return (
@@ -28,7 +20,7 @@ export function StatusSelector({ value, onChange, disabled = false }: StatusSele
                 disabled={disabled}
                 className="w-full bg-gray-900 border border-gray-700 rounded-md p-3 text-white focus:border-primary focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
-                {STATUS_OPTIONS.map((option) => (
+                {STATUS_LIST.map((option) => (
                     <option key={option.value} value={option.value}>
                         {option.label}
                     </option>
