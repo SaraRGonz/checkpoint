@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useLibrary } from '../hooks/useLibrary';
 import { useFilters } from '../hooks/useFilters';
-import { GameCard } from '../components/ui/GameCard';
+import { GameCard } from '../components/game/GameCard';
 import { SearchInput } from '../components/ui/SearchInput';
 import { EmptyState } from '../components/ui/EmptyState';
 import { Button } from '../components/ui/Button';

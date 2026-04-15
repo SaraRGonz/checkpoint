@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { fetchApi } from '../api/client';
 import { SearchInput } from '../components/ui/SearchInput';
-import { GameCard } from '../components/ui/GameCard';
+import { GameCard } from '../components/game/GameCard';
 import { Spinner } from '../components/ui/Spinner';
 import { ErrorMessage } from '../components/ui/ErrorMessage';
 import { Button } from '../components/ui/Button';

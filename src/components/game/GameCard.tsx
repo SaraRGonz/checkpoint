@@ -1,6 +1,6 @@
 import type { Game } from '../../types/game'; 
 import { Badge } from '../ui/Badge';
-import { StarRating } from '../ui/StarRating';
+import { StarRating } from '../game/StarRating';
 
 interface GameCardProps {
     game: Game; // se indica que va a recibir un objeto con forma de 'Game'
