@@ -1,10 +1,12 @@
 interface StarRatingProps {
     rating: number;
     maxStars?: number; // por si en algún punto se quieren poner más o menos estrellas
+    onChange?: (rating: number) => void; 
+    disabled?: boolean; 
 }
 
 
-export function StarRating({ rating, maxStars = 5 }: StarRatingProps) { //  maxStars con valor por defecto de 5
+export function StarRating({ rating, maxStars = 5, onChange, disabled = false }: StarRatingProps) { //  maxStars con valor por defecto de 5
     
     // ({ length: maxStars }) toma el número introducido en maxStars para crear un array vacío con esa longitud
     // (_, i) => i + 1 es una función que recorre el array para rellenarlo ([0,1,2,3,4]) y para que no devuelva una estrella cero devuelve i + 1 ([1, 2, 3, 4, 5])
@@ -20,7 +22,9 @@ export function StarRating({ rating, maxStars = 5 }: StarRatingProps) { //  maxS
                 return (
                     <svg
                         key={starNumber} // el key que pide React para identificar cada estrella
-                        className={`w-5 h-5 ${isFilled ? 'text-filledstar fill-current' : 'text-emptystar fill-current'}`}
+                        onClick={() => !disabled && onChange?.(starNumber)}
+                        className={`w-5 h-5 ${isFilled ? 'text-filledstar fill-current' : 'text-emptystar fill-current'
+                        } ${!disabled && onChange ? 'cursor-pointer hover:scale-110' : ''}`}
                         xmlns="http://www.w3.org/2000/svg" // donde se define el idioma usado para dibujar el svg
                         viewBox="0 0 24 24" // marca la posición y la dimension
                         stroke="currentColor" // hereda el color que corresponda de className
