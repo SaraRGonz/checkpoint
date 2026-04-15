@@ -1,14 +1,12 @@
 import express from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
+import { env } from './config/env';
 import libraryRoutes from './routes/library.routes';
 import gamesRoutes from './routes/games.routes';
-
-// cargar variables de entorno
-dotenv.config();
+import { errorHandler } from './middleware/errorHandler';
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = env.PORT;
 
 // middlewares globales
 app.use(cors()); // permite peticiones desde el frontend
@@ -22,6 +20,7 @@ app.get('/api/health', (req, res) => {
 // conecta la ruta base /api/v1/library con el archivo de rutas
 app.use('/api/v1/library', libraryRoutes);
 app.use('/api/v1/games', gamesRoutes);
+app.use(errorHandler);
 
 // arrancar el servidor
 app.listen(PORT, () => {

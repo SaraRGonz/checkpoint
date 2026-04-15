@@ -1,14 +1,13 @@
-import dotenv from 'dotenv';
-dotenv.config();
+import { env } from '../config/env'; // <-- Importamos la configuración
 
-const API_KEY = process.env.RAWG_API_KEY;
+const API_KEY = env.RAWG_API_KEY;
 const BASE_URL = 'https://api.rawg.io/api';
 
 export const searchGames = async (query: string) => {
     // busca juegos usando la API Key y limitando a 12 resultados por página
     const response = await fetch(`${BASE_URL}/games?key=${API_KEY}&search=${query}&page_size=12`);
     
-    if (!response.ok) throw new Error('Error en la API de RAWG');
+    if (!response.ok) throw new Error('Error fetching data from RAWG API');
     
     const data = await response.json();
     
@@ -25,7 +24,7 @@ export const searchGames = async (query: string) => {
 export const getGameDetails = async (rawgId: string) => {
     const response = await fetch(`${BASE_URL}/games/${rawgId}?key=${API_KEY}`);
     
-    if (!response.ok) throw new Error('Error en la API de RAWG');
+    if (!response.ok) throw new Error('Error fetching data from RAWG API');
     
     const data = await response.json();
     
