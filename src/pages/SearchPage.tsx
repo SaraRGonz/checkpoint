@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { fetchApi } from '../api/client';
+import { searchGamesInRawg } from '../api/games';
 import { SearchInput } from '../components/ui/SearchInput';
 import { GameCard } from '../components/game/GameCard';
 import { Spinner } from '../components/ui/Spinner';
@@ -39,7 +39,7 @@ export function SearchPage() {
             setHasSearched(true);
             
             // llama al propio backend que hace de proxy hacia RAWG
-            const data = await fetchApi<SearchResponse>(`/games/search?q=${encodeURIComponent(query)}`);
+            const data = await searchGamesInRawg(query);
             
             // mapea los resultados de RAWG para que encajen con la interfaz 'Game'
             // y el componente GameCard pueda pintarlos sin errores
@@ -71,7 +71,7 @@ export function SearchPage() {
 
             {/* formulario de búsqueda */}
             <form onSubmit={handleSearch} className="flex gap-4 max-w-2xl">
-                <div className="flex-grow">
+                <div className="grow">
                     <SearchInput 
                         value={query} 
                         onChange={setQuery} 

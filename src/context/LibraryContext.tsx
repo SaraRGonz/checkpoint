@@ -1,8 +1,7 @@
 import { createContext, useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
 import type { Game } from '../types/game';
-import { fetchApi } from '../api/client'; 
-
+import * as libraryApi from '../api/library';
 // le dice a TypeScript qué datos y funciones van a vivir dentro del contexto global
 interface LibraryContextType {
     // la lista completa de juegos que el usuario ha guardado
@@ -46,7 +45,7 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
                 setIsLoading(true);
                 setError(null);
                 // el backend devuelve { data: Game[], total: number } y se tipa así
-                const result = await fetchApi<{ data: Game[] }>('/library');
+                const result = await libraryApi.getLibrary();
                 // actualizamos la memoria de la app con los datos reales del servidor
                 setGames(result.data);
             } catch (err: any) {
@@ -69,10 +68,7 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
             setIsLoading(true);
             setError(null);
             // el servidor recibe los datos y devuelve el juego ya con su ID creado
-            const savedGame = await fetchApi<Game>('/library', {
-                method: 'POST',
-                body: JSON.stringify(newGameData)
-            });
+            const savedGame = await libraryApi.addGameToLibrary(newGameData);
             
             // actualiza el estado añadiendo a la lista el juego que ha confirmado el servidor
             setGames((prevGames) => [...prevGames, savedGame]);
@@ -90,10 +86,7 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
             setIsLoading(true);
             setError(null);
             // avisa al servidor del cambio y devuelve el objeto juego actualizado
-            const updatedGame = await fetchApi<Game>(`/library/${id}`, {
-                method: 'PUT',
-                body: JSON.stringify(updates)
-            });
+            const updatedGame = await libraryApi.updateGameInLibrary(id, updates);
 
             // .map() recorre el array. Si el ID coincide inyecta la respuesta del servidor (updatedGame)
             // si no coincide mantiene el juego original sin cambios
@@ -114,7 +107,7 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
             setIsLoading(true);
             setError(null);
             // petición al servidor para eliminar el recurso físicamente
-            await fetchApi(`/library/${id}`, { method: 'DELETE' });
+            await libraryApi.deleteGameFromLibrary(id);
             
             // si el servidor confirma el borrado usa .filter() para quitarlo de la lista local
             setGames((prevGames) => prevGames.filter(game => game.id !== id));
