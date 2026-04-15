@@ -1,0 +1,73 @@
+import type { ReactNode } from 'react';
+import { useEffect } from 'react';
+import { Button } from './Button'; 
+
+// define cómo debe ser cada botón del footer
+export interface ModalButton {
+    content: string;
+    variant?: 'primary' | 'secondary' | 'danger'; // usa las variantes de Button.tsx
+    onClick?: () => void;
+}
+
+interface ModalProps {
+    isOpen: boolean;
+    onClose: () => void;
+    title: string;
+    children: ReactNode;
+    footerButtons?: ModalButton[]; // prop opcional para los botones
+}
+
+export function Modal({ isOpen, onClose, title, children, footerButtons }: ModalProps) {
+    useEffect(() => {
+        const handleEsc = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') onClose();
+        };
+        window.addEventListener('keydown', handleEsc);
+        return () => window.removeEventListener('keydown', handleEsc);
+    }, [onClose]);
+
+    if (!isOpen) return null;
+
+    return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70">
+            <div 
+                className="bg-gray-800 rounded-lg shadow-xl w-full max-w-md border border-gray-700 overflow-hidden flex flex-col"
+                role="dialog"
+                aria-modal="true"
+            >
+                {/* cabecera */}
+                <div className="flex justify-between items-center p-4 border-b border-gray-700">
+                    <h2 className="text-xl font-bold text-text">{title}</h2>
+                    <button 
+                        onClick={onClose}
+                        className="text-gray-400 hover:text-white transition-colors"
+                    >
+                        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                
+                {/* contenido principal */}
+                <div className="p-6 text-gray-300">
+                    {children}
+                </div>
+
+                {/* footer de botones que solo se renderiza si le paso el array */}
+                {footerButtons && footerButtons.length > 0 && (
+                    <div className="p-4 border-t border-gray-700 flex justify-end gap-3 bg-gray-900/50">
+                        {footerButtons.map((btn, index) => (
+                            <Button 
+                                key={index} 
+                                variant={btn.variant || 'secondary'} 
+                                onClick={btn.onClick || onClose}
+                            >
+                                {btn.content}
+                            </Button>
+                        ))}
+                    </div>
+                )}
+            </div>
+        </div>
+    );
+}

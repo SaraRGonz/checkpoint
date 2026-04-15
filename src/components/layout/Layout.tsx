@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import { Navbar } from './Navbar';
+import { Footer } from './Footer';
 
 export function Layout() {
     return (
@@ -7,11 +8,11 @@ export function Layout() {
             <Navbar />
             
             {/* main es el contenedor donde se va a cargar el contenido de cada página */}
-            <main className="flex-grow container mx-auto px-4 py-8">
+            <main className="grow container mx-auto px-4 py-8">
                 <Outlet /> 
             </main>
             
-            {/* aquí va a ir el footer*/}
+            <Footer />
         </div>
     );
 }
