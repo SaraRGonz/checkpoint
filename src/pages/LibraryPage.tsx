@@ -13,6 +13,9 @@ export function LibraryPage() {
     const { games } = useLibrary();
     const navigate = useNavigate();
 
+    // crea una lista que excluye los juegos con estado wishlist
+    const libraryGames = games.filter(g => g.status !== 'Wishlist');
+
     const {
         filteredGames,
         availableGenres,
@@ -23,7 +26,7 @@ export function LibraryPage() {
         platformFilter, setPlatformFilter,
         ratingFilter, setRatingFilter,
         clearFilters, hasActiveFilters
-    } = useFilters(games);
+    } = useFilters(libraryGames);
 
     const sortLabels: Record<SortOption, string> = {
         'added-desc': 'Recently Added',
