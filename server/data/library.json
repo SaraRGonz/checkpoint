@@ -2,10 +2,18 @@
   {
     "title": "Prueba 1",
     "platform": "PC",
-    "status": "Backlog",
-    "coverUrl": "https://coltonconcrete.co.uk/wp-content/uploads/2021/10/placeholder1.jpg",
+    "status": "Playing",
+    "coverUrl": "https://media.discordapp.net/attachments/933196749722492928/1438315213802836129/image.png?ex=69e0cd2d&is=69df7bad&hm=ec6a662a5be8633d7c841d87223d67bfab4897a59ec0cfa03396253fe1b8817d&=&format=webp&quality=lossless&width=566&height=525",
     "id": "8c2099d3-61f7-41e0-9891-7291b4485b9a",
-    "addedAt": "2026-04-14T13:11:24.536Z"
+    "addedAt": "2026-04-14T13:11:24.536Z",
+    "review": "dfaf\nefdsf\n\nf\nd\nfd\nds\nfd\nf\nds\nf\nds\nf\nds\nds\n\nfsd\nf\nds\n",
+    "updatedAt": "2026-04-16T13:30:04.240Z",
+    "releaseYear": 2000,
+    "genres": [
+      "Action",
+      "RPG"
+    ],
+    "rating": 2
   },
   {
     "title": "Prueba 2",
@@ -14,5 +22,30 @@
     "coverUrl": "https://coltonconcrete.co.uk/wp-content/uploads/2021/10/placeholder1.jpg",
     "id": "563072f6-84aa-4035-b62f-54f89e51544b",
     "addedAt": "2026-04-14T13:11:32.050Z"
+  },
+  {
+    "title": "Prueba 3",
+    "platform": "Switch",
+    "status": "Playing",
+    "coverUrl": "https://coltonconcrete.co.uk/wp-content/uploads/2021/10/placeholder1.jpg",
+    "id": "b80beb3f-2b71-4a2d-a3f3-95ce39c90d92",
+    "addedAt": "2026-04-15T15:10:17.792Z"
+  },
+  {
+    "title": "Juego prueba 4",
+    "platform": "PC",
+    "status": "Backlog",
+    "coverUrl": "https://coltonconcrete.co.uk/wp-content/uploads/2021/10/placeholder1.jpg",
+    "id": "79e4c402-27b0-4e15-a4ca-c6c8af243d7f",
+    "addedAt": "2026-04-16T13:06:30.122Z"
+  },
+  {
+    "title": "Juego prueba 5",
+    "platform": "PC",
+    "status": "Playing",
+    "coverUrl": "https://coltonconcrete.co.uk/wp-content/uploads/2021/10/placeholder1.jpg",
+    "id": "3ce1aa54-11d3-4d8a-803e-e9f9e3afeb50",
+    "addedAt": "2026-04-16T13:06:41.095Z",
+    "updatedAt": "2026-04-16T15:02:01.392Z"
   }
 ]
