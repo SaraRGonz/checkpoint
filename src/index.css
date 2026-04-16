@@ -83,3 +83,26 @@ body {
     --color-background: #F3F4F6;
     --color-text: #111827;
 }
+
+/* ---- CUSTOM SCROLLBAR ---- */
+
+/* Para navegadores basados en WebKit (Chrome, Edge, Safari, Opera) */
+::-webkit-scrollbar {
+    width: 6px;  
+    height: 6px; 
+}
+
+::-webkit-scrollbar-track {
+    background: transparent; 
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #4b5563; 
+    border-radius: 10px; 
+}
+
+/* Para Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #4b5563 transparent;
+}
