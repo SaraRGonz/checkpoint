@@ -1,6 +1,5 @@
 import type { Game } from '../../types/game'; 
 import { Badge } from '../ui/Badge';
-import { StarRating } from '../game/StarRating';
 import { Link } from 'react-router-dom'; 
 
 interface GameCardProps {
@@ -9,35 +8,64 @@ interface GameCardProps {
 }
 
 export function GameCard({ game, showDetails = true }: GameCardProps) {
+
+    // limitar los géneros y poner ... si hay más de dos
+    const MAX_GENRES = 2;
+    let displayGenres = '';
+
+    if (game.genres && game.genres.length > 0) {
+        const visibleGenres = game.genres.slice(0, MAX_GENRES);
+        displayGenres = visibleGenres.join(', ');
+        if (game.genres.length > MAX_GENRES) {
+            displayGenres += '...';
+        }
+    }
+
     return (
         <Link 
             to={`/game/${game.id}`} // lleva a la ruta del GameDetailPage dle juego en concreto
-            className="block border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all hover:border-primary/50 group bg-gray-900/20"
+            className="flex flex-col bg-gray-900 border border-gray-800 rounded-xl overflow-hidden hover:border-primary hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 group h-full"
         >
-            {/* carátula */}
-            <img src={game.coverUrl} 
+
+            {/* carátula con aspect ratio fijo 3:4*/}
+            <div className="relative aspect-3/4 overflow-hidden bg-gray-950">
+                <img 
+                    src={game.coverUrl} 
                     alt={game.title} 
-                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" 
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
                 />
-            
-            <div className="p-4">
-                {/* título */}
-                <h3 className="font-bold text-lg mb-2 text-text group-hover:text-primary transition-colors">
+                {/* gradiente para que la imagen se mezcle con la tarjeta */}
+                <div className="absolute inset-0 bg-linear-to-t from-gray-900 via-transparent to-transparent opacity-80" />
+            </div>
+
+
+            {/* informacion del juego */}
+            <div className="flex flex-col grow p-5 gap-1.5">
+                {/* título siempre visible y cortado si es muy largo */}
+                <h3 className="text-lg font-bold text-gray-100 leading-tight truncate" title={game.title}>
                     {game.title}
                 </h3>
 
-                {/* badges y estrellas (solo se renderizan si showDetails es true) */}
+                {/* géneros solo si showDetails es true */}
                 {showDetails && (
-                    <div className="flex justify-between items-center mt-auto pt-4">
-                        {/* badge */}
-                        {/* pasa el texto de la plataforma (ej: "PS5") como 'children' */}
-                        <Badge variant="default">
-                            {game.platform}
-                        </Badge>
+                    <p className="text-sm text-gray-400 truncate" title={game.genres?.join(', ')}>
+                        {displayGenres}
+                    </p>
+                )}
 
-                        {/* starRating */}
-                        {/* pasa el número de la puntuación (ej: 4) a la prop 'rating' */}
-                        <StarRating rating={game.rating || 0} />
+                {/* pie de tarjeta con plataforma y estado */}
+                {showDetails && (
+                    <div className="flex justify-between items-center mt-auto pt-3 border-t border-gray-800/50">
+                        {/* plataforma */}
+                        <span className="text-xs font-bold text-gray-500 uppercase tracking-widest truncate max-w-[55%]">
+                            {game.platform}
+                        </span>
+                        
+                        {/* badge estado */}
+                        <Badge variant={game.status}>
+                            {game.status}
+                        </Badge>
                     </div>
                 )}
             </div>

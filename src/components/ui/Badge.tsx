@@ -1,19 +1,20 @@
 import type { ReactNode } from 'react';
+import type { GameStatus } from '../../types/game';
 
 // interfaz de Badge con las variantes opcionales de los estados que maneja la app
 interface BadgeProps {
     children: ReactNode; // el texto del badge
-    variant?: 'default' | 'wishlist' | 'backlog' | 'playing' | 'completed' | 'dropped';
+    variant?: GameStatus | 'default';
 }
 
 // colores de Tailwind para las distintas variantes de badge
-const variantStyles = {
+const variantStyles: Record<GameStatus | 'default', string> = {
     default: 'bg-badge-bgdefault text-badge-default',
-    wishlist: 'bg-badge-bgwishlist text-badge-wishlist',
-    backlog: 'bg-badge-bgbacklog text-badge-backlog',
-    playing: 'bg-badge-bgplaying text-badge-playing',
-    completed: 'bg-badge-bgcompleted text-badge-completed',
-    dropped: 'bg-badge-bgdropped text-badge-dropped'
+    Wishlist: 'bg-badge-bgwishlist text-badge-wishlist',
+    Backlog: 'bg-badge-bgbacklog text-badge-backlog',
+    Playing: 'bg-badge-bgplaying text-badge-playing',
+    Completed: 'bg-badge-bgcompleted text-badge-completed',
+    Dropped: 'bg-badge-bgdropped text-badge-dropped'
 }
 
 // crea el componente con el valor 'default' por defecto
