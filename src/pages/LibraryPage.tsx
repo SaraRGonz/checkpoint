@@ -13,7 +13,7 @@ export function LibraryPage() {
     const { games } = useLibrary();
     const navigate = useNavigate();
 
-    // crea una lista que excluye los juegos con estado wishlist
+    // excluye los juegos con estado wishlist
     const libraryGames = games.filter(g => g.status !== 'Wishlist');
 
     const {
@@ -46,10 +46,10 @@ export function LibraryPage() {
     return (
         <div className="flex flex-col lg:flex-row gap-8 items-start">
             
-            {/* --- SIDEBAR --- */}
+            {/* SIDEBAR */}
             <aside className="w-full lg:w-64 shrink-0 flex flex-col gap-6">
                 
-                {/* 1. Botones de Acción */}
+                {/* botones de acción */}
                 <div className="flex flex-col gap-3">
                     <Button variant="primary" onClick={() => navigate('/search')}>
                         <span className="flex items-center justify-center gap-2">
@@ -69,7 +69,7 @@ export function LibraryPage() {
                     </Button>
                 </div>
 
-                {/* 2. Búsqueda - Aseguramos que el contenedor no limite el ancho */}
+                {/* búsqueda */}
                 <div className="w-full">
                     <SearchInput 
                         value={searchQuery} 
@@ -78,7 +78,7 @@ export function LibraryPage() {
                     />
                 </div>
 
-                {/* 3. Order By */}
+                {/* order by */}
                 <div className="flex flex-col gap-1.5 w-full">
                     <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Order by</label>
                     <ActionMenu value={sortOption} onSelect={(val) => setSortOption(val as SortOption)}>
@@ -94,7 +94,7 @@ export function LibraryPage() {
 
                 <hr className="border-gray-800" />
 
-                {/* 4. Título Filters */}
+                {/* título filters */}
                 <div className="flex justify-between items-center">
                     <h2 className="text-xl font-black text-primary uppercase tracking-tighter">Filters</h2>
                     {hasActiveFilters && (
@@ -104,9 +104,9 @@ export function LibraryPage() {
                     )}
                 </div>
 
-                {/* 5. Filtros Desplegables - Todos con el mismo ancho */}
+                {/* filtros desplegables */}
                 <div className="flex flex-col gap-4">
-                    {/* Status */}
+                    {/* status */}
                     <div className="flex flex-col gap-1.5 w-full">
                         <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Status</label>
                         <ActionMenu value={statusFilter} onSelect={setStatusFilter}>
@@ -122,7 +122,7 @@ export function LibraryPage() {
                         </ActionMenu>
                     </div>
 
-                    {/* Genre */}
+                    {/* genre */}
                     <div className="flex flex-col gap-1.5 w-full">
                         <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Genre</label>
                         <ActionMenu value={genreFilter} onSelect={setGenreFilter}>
@@ -142,7 +142,7 @@ export function LibraryPage() {
                         </ActionMenu>
                     </div>
 
-                    {/* Platform */}
+                    {/* platform */}
                     <div className="flex flex-col gap-1.5 w-full">
                         <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Platform</label>
                         <ActionMenu value={platformFilter} onSelect={setPlatformFilter} position="top">
@@ -158,7 +158,7 @@ export function LibraryPage() {
                         </ActionMenu>
                     </div>
 
-                    {/* Rating */}
+                    {/* rating */}
                     <div className="flex flex-col gap-1.5 w-full">
                         <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Rating</label>
                         <ActionMenu value={ratingFilter} onSelect={setRatingFilter} position="top">
