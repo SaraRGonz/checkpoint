@@ -1,41 +1,86 @@
 import { useState, useMemo, useCallback } from 'react';
 import type { Game } from '../types/game';
 
+export type SortOption = 'title-asc' | 'title-desc' | 'added-desc' | 'updated-desc';
+
 export function useFilters(initialGames: Game[]) {
-    // estado local de filtrado
-    const [statusFilter, setStatusFilter] = useState<string>('all');
+    
+    // estados para los controles 
     const [searchQuery, setSearchQuery] = useState<string>('');
+    const [sortOption, setSortOption] = useState<SortOption>('added-desc');
+    
+    // filtros de los desplegables
+    const [statusFilter, setStatusFilter] = useState<string>('all');
+    const [genreFilter, setGenreFilter] = useState<string>('all');
+    const [platformFilter, setPlatformFilter] = useState<string>('all');
+    const [ratingFilter, setRatingFilter] = useState<string>('all');
 
-    // useMemo para optimizar cálculos ---
-    // recibe una función de cálculo y un array de dependencias
-    // solo vuelve a ejecutar el .filter() si cambia 'initialGames', 'statusFilter' o 'searchQuery'.
-    const filteredGames = useMemo(() => {
-        return initialGames.filter((game) => {
-            // comprobación de estado
-            const matchesStatus = statusFilter === 'all' || game.status === statusFilter;
-            // comprobación de búsqueda por texto (ignorando mayúsculas/minúsculas)
-            const matchesSearch = game.title.toLowerCase().includes(searchQuery.toLowerCase());
-            
-            return matchesStatus && matchesSearch;
+    // extrae los géneros únicos de todos los juegos de la biblioteca que tenga el usuario
+    const availableGenres = useMemo(() => {
+        const genres = new Set<string>();
+        initialGames.forEach(game => {
+            if (game.genres && game.genres.length > 0) {
+                game.genres.forEach(g => genres.add(g));
+            }
         });
-    }, [initialGames, statusFilter, searchQuery]);
+        return Array.from(genres).sort(); // los ordena alfabéticamente
+    }, [initialGames]);
 
-    // useCallback para optimizar funciones
-    // memoriza la instancia de la función y como tiene un array de dependencias vacío [] 
-    // la función se crea sola una vez al montar el hook y no se vuelve a instanciar en memoria
-    // para evitar renders innecesarios en componentes hijos que reciban la función como prop
+    // filtra y después ordena los juegos
+    const filteredGames = useMemo(() => {
+        // filtrar
+        let result = initialGames.filter((game) => {
+            const matchesSearch = game.title.toLowerCase().includes(searchQuery.toLowerCase());
+            const matchesStatus = statusFilter === 'all' || game.status === statusFilter;
+            const matchesGenre = genreFilter === 'all' || (game.genres && game.genres.includes(genreFilter));
+            const matchesPlatform = platformFilter === 'all' || game.platform === platformFilter;
+            const matchesRating = ratingFilter === 'all' || (game.rating && game.rating.toString() === ratingFilter);
+            
+            return matchesSearch && matchesStatus && matchesGenre && matchesPlatform && matchesRating;
+        });
+
+        // ordenar
+        result.sort((a, b) => {
+            switch (sortOption) {
+                case 'title-asc': 
+                    return a.title.localeCompare(b.title);
+                case 'title-desc': 
+                    return b.title.localeCompare(a.title);
+                case 'updated-desc': 
+                    return new Date(b.updatedAt || 0).getTime() - new Date(a.updatedAt || 0).getTime();
+                case 'added-desc':
+                default:
+                    // si no hay fecha usa 0 para que no falle el parseo
+                    return new Date(b.addedAt || 0).getTime() - new Date(a.addedAt || 0).getTime();
+            }
+        });
+
+        return result;
+    }, [initialGames, searchQuery, statusFilter, genreFilter, platformFilter, ratingFilter, sortOption]);
+
+    // función para resetear todo de golpe
     const clearFilters = useCallback(() => {
-        setStatusFilter('all');
         setSearchQuery('');
+        setSortOption('added-desc');
+        setStatusFilter('all');
+        setGenreFilter('all');
+        setPlatformFilter('all');
+        setRatingFilter('all');
     }, []);
 
-    // devuelve el estado, las funciones actualizadora, la lista filtrada y la función memorizada
+    // calcula si hay algún filtro activo para poner el botón de limpiar
+    const hasActiveFilters = searchQuery !== '' || sortOption !== 'added-desc' || statusFilter !== 'all' || genreFilter !== 'all' || platformFilter !== 'all' || ratingFilter !== 'all';
+
     return {
-        statusFilter,
-        setStatusFilter,
-        searchQuery,
-        setSearchQuery,
+        searchQuery, setSearchQuery,
+        sortOption, setSortOption,
+        statusFilter, setStatusFilter,
+        genreFilter, setGenreFilter,
+        platformFilter, setPlatformFilter,
+        ratingFilter, setRatingFilter,
         filteredGames,
-        clearFilters
+        availableGenres,
+        clearFilters,
+        hasActiveFilters
     };
 }
