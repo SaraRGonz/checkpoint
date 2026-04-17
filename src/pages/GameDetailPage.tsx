@@ -35,7 +35,7 @@ export function GameDetailPage() {
     const handleDeleteConfirm = async () => {
         await deleteGame(game.id);
         setIsDeleteModalOpen(false);
-        navigate('/library'); // Redirige a la biblioteca tras borrar
+        navigate('/library'); // redirige a la biblioteca tras borrar
     };
 
     const handleSaveImage = () => {
@@ -114,8 +114,8 @@ export function GameDetailPage() {
                     </div>
                     <div className="pt-2">
                         <p className="text-[10px] uppercase text-gray-600 font-bold mb-3 tracking-[0.2em] text-center">Preview</p>
-                        <div className="w-32 mx-auto aspect-3/4] rounded-xl overflow-hidden border-2 border-gray-700 shadow-2xl bg-gray-950">
-                            <img src={tempImageUrl} alt="Preview" className="w-full h-full object-cover" onError={(e) => (e.currentTarget.src = 'https://images.placeholders.dev/?width=300&height=400&text=Invalid+URL&bgColor=%230b1026&textColor=%23ffffff')} />
+                        <div className="w-32 mx-auto aspect-3/4 rounded-xl overflow-hidden border-2 border-gray-700 shadow-2xl bg-gray-950">
+                            <img src={tempImageUrl} alt="Preview" className="w-full h-full object-cover" onError={(e) => (e.currentTarget.src = 'https://coltonconcrete.co.uk/wp-content/uploads/2021/10/placeholder1.jpg')} />
                         </div>
                     </div>
                 </div>
