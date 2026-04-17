@@ -24,7 +24,8 @@ export function Navbar() {
             <div className="hidden md:flex items-center bg-gray-900/40 border border-gray-700/50 rounded-full p-1 shadow-inner relative">
                 <div className="flex items-center gap-1 relative">
                     <NavItem to="/" active={isActive('/')} label="Home">
-                        <rect x="6" y="6" width="12" height="12" rx="1" />
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" strokeLinecap="round" strokeLinejoin="round" />
+                        <polyline points="9 22 9 12 15 12 15 22" strokeLinecap="round" strokeLinejoin="round" />
                     </NavItem>
                     
                     <NavItem to="/library" active={isActive('/library')} label="My Library">
@@ -37,6 +38,10 @@ export function Navbar() {
 
                     <NavItem to="/search" active={isActive('/search')} label="Search Games">
                         <path d="M12 6l6 12H6z" />
+                    </NavItem>
+
+                    <NavItem to="/library/add" active={isActive('/library/add')} label="Add Game">
+                        <rect x="6" y="6" width="12" height="12" rx="1" />
                     </NavItem>
                 </div>
             </div>
