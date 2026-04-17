@@ -16,13 +16,13 @@ export function WishlistPage() {
     const { games, updateGame, deleteGame } = useLibrary();
     const navigate = useNavigate();
 
-    // ESTADO PARA EL BORRADO: Guardamos el objeto del juego que se quiere borrar
+    // estado para borrado que guarda el objeto del juego que se quiere borrar
     const [gameToDelete, setGameToDelete] = useState<Game | null>(null);
 
-    // 1. Filtramos primero la colección global para quedarnos solo con la Wishlist
+    // filtra la colección global para quedarse solo con la Wishlist
     const wishlistGames = games.filter(g => g.status === 'Wishlist');
 
-    // 2. Le pasamos solo los juegos de la wishlist a nuestro motor de filtros
+    // le pasa solo los juegos de la wishlist al motor de filtros
     const {
         filteredGames,
         availableGenres,
@@ -40,16 +40,16 @@ export function WishlistPage() {
         'title-desc': 'Alphabetical (Z-A)'
     };
 
-    // Funciones para los botones de acción de cada tarjeta
+    // funciones para los botones de acción de cada tarjeta
     const handleMoveToLibrary = async (id: string) => {
-        // Al añadir a la biblioteca desde la wishlist, por defecto lo mandamos al "Backlog"
+        // al añadir a la biblioteca desde la wishlist por defecto se manda al Backlog
         await updateGame(id, { status: 'Backlog' });
     };
 
     const handleDeleteConfirm = async () => {
         if (gameToDelete) {
             await deleteGame(gameToDelete.id);
-            setGameToDelete(null); // Limpiamos el estado
+            setGameToDelete(null); // limpia el estado
         }
     };
 
@@ -67,14 +67,16 @@ export function WishlistPage() {
         }
     ];
 
-    // Si no hay ningún juego en la wishlist
+    // si no hay ningún juego en la wishlist
     if (wishlistGames.length === 0) {
         return (
             <EmptyState
                 title="Your wishlist is empty"
                 message="Discover new adventures and add them here to keep track of what you want to play next!"
-                clickText="Discover Games"
+                clickText="Discover games"
                 onClick={() => navigate('/search')}
+                onSecondaryClick={() => navigate('/library/add')}
+                secondaryClickText="Add game manually"
             />
         );
     }
@@ -82,10 +84,10 @@ export function WishlistPage() {
     return (
         <div className="flex flex-col lg:flex-row gap-8 items-start">
             
-            {/* --- SIDEBAR --- */}
+            {/* SIDEBAR */}
             <aside className="w-full lg:w-64 shrink-0 flex flex-col gap-6">
                 
-                {/* 1. Botones de Acción */}
+                {/* botones de acción */}
                 <div className="flex flex-col gap-3">
                     <Button variant="primary" onClick={() => navigate('/search')}>
                         <span className="flex items-center justify-center gap-2">
@@ -100,12 +102,12 @@ export function WishlistPage() {
                             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
                             </svg>
-                            Add Manual Game
+                            Add game manually
                         </span>
                     </Button>
                 </div>
 
-                {/* 2. Búsqueda exclusiva para Wishlist */}
+                {/* búsqueda en la wishlist */}
                 <div className="w-full">
                     <SearchInput 
                         value={searchQuery} 
@@ -114,14 +116,14 @@ export function WishlistPage() {
                     />
                 </div>
 
-                {/* 3. Order By */}
+                {/* order by */}
                 <div className="flex flex-col gap-1.5 w-full">
                     <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Order by</label>
                     <ActionMenu value={sortOption} onSelect={(val) => setSortOption(val as SortOption)}>
                         <ActionMenu.Button>{sortLabels[sortOption]}</ActionMenu.Button>
                         <ActionMenu.Overlay>
-                            <ActionMenu.Item value="added-desc">Recently Added</ActionMenu.Item>
-                            <ActionMenu.Item value="updated-desc">Recently Updated</ActionMenu.Item>
+                            <ActionMenu.Item value="added-desc">Recently added</ActionMenu.Item>
+                            <ActionMenu.Item value="updated-desc">Recently updated</ActionMenu.Item>
                             <ActionMenu.Item value="title-asc">Alphabetical (A-Z)</ActionMenu.Item>
                             <ActionMenu.Item value="title-desc">Alphabetical (Z-A)</ActionMenu.Item>
                         </ActionMenu.Overlay>
@@ -130,7 +132,7 @@ export function WishlistPage() {
 
                 <hr className="border-gray-800" />
 
-                {/* 4. Título Filters */}
+                {/* título filters */}
                 <div className="flex justify-between items-center">
                     <h2 className="text-xl font-black text-primary uppercase tracking-tighter">Filters</h2>
                     {hasActiveFilters && (
@@ -140,9 +142,9 @@ export function WishlistPage() {
                     )}
                 </div>
 
-                {/* 5. Filtros Desplegables (Solo Genre y Platform) */}
+                {/* filtros desplegables */}
                 <div className="flex flex-col gap-4">
-                    {/* Genre */}
+                    {/* genre */}
                     <div className="flex flex-col gap-1.5 w-full">
                         <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Genre</label>
                         <ActionMenu value={genreFilter} onSelect={setGenreFilter}>
@@ -162,7 +164,7 @@ export function WishlistPage() {
                         </ActionMenu>
                     </div>
 
-                    {/* Platform */}
+                    {/* platform */}
                     <div className="flex flex-col gap-1.5 w-full">
                         <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Platform</label>
                         <ActionMenu value={platformFilter} onSelect={setPlatformFilter} position="top">
@@ -181,24 +183,26 @@ export function WishlistPage() {
 
             </aside>
 
-            {/* --- GRID --- */}
+            {/* GRID */}
             <main className="flex-1 w-full">
                 {filteredGames.length === 0 ? (
-                    <div className="flex flex-col items-center justify-center p-12 text-center bg-gray-900/30 rounded-2xl border-2 border-dashed border-gray-800 min-h-100">
-                        <p className="text-gray-500 font-medium">Mission Failed</p>
-                        <p className="text-gray-500 font-medium">It seems no game survived your selection. Try a different strategy!</p>
-                        <button onClick={clearFilters} className="mt-2 text-primary text-sm font-bold hover:underline">Respawn Filters</button>
-                    </div>
+                    /* emptystate de filtros sin coincidencias en deseados */
+                    <EmptyState 
+                        title="Mission Failed"
+                        message="No items found with these filters. Keep scouting!"
+                        onClick={clearFilters}
+                        clickText="Respawn Filters"
+                    />
                 ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6 animate-in fade-in duration-500">
                         {filteredGames.map(game => (
                             <div key={game.id} className="flex flex-col gap-3 h-full">
-                                {/* Componente Tarjeta: sin detalles, solo cover y título */}
+                                {/* tarjeta sin detalles solo con cover y título */}
                                 <div className="flex-1">
                                     <GameCard game={game} showDetails={false} />
                                 </div>
                                 
-                                {/* Botones de acción debajo de la tarjeta */}
+                                {/* botones de acción debajo de la tarjeta */}
                                 <div className="flex gap-2">
                                     <div className="flex-1">
                                         <Button variant="primary" onClick={() => handleMoveToLibrary(game.id)}>
@@ -225,7 +229,7 @@ export function WishlistPage() {
                     </div>
                 )}
             </main>
-            {/* --- MODAL DE CONFIRMACIÓN --- */}
+            {/* MODAL DE CONFIRMACIÓN PARA BPRRAR */}
             <Modal
                 isOpen={gameToDelete !== null}
                 onClose={() => setGameToDelete(null)}

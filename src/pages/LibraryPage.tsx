@@ -39,6 +39,8 @@ export function LibraryPage() {
         return (
             <EmptyState
                 onClick={() => navigate('/search')}
+                onSecondaryClick={() => navigate('/library/add')}
+                secondaryClickText="Add game manually"
             />
         );
     }
@@ -64,7 +66,7 @@ export function LibraryPage() {
                             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
                             </svg>
-                            Add Manual Game
+                            Add game manually
                         </span>
                     </Button>
                 </div>
@@ -84,8 +86,8 @@ export function LibraryPage() {
                     <ActionMenu value={sortOption} onSelect={(val) => setSortOption(val as SortOption)}>
                         <ActionMenu.Button>{sortLabels[sortOption]}</ActionMenu.Button>
                         <ActionMenu.Overlay>
-                            <ActionMenu.Item value="added-desc">Recently Added</ActionMenu.Item>
-                            <ActionMenu.Item value="updated-desc">Recently Updated</ActionMenu.Item>
+                            <ActionMenu.Item value="added-desc">Recently added</ActionMenu.Item>
+                            <ActionMenu.Item value="updated-desc">Recently updated</ActionMenu.Item>
                             <ActionMenu.Item value="title-asc">Alphabetical (A-Z)</ActionMenu.Item>
                             <ActionMenu.Item value="title-desc">Alphabetical (Z-A)</ActionMenu.Item>
                         </ActionMenu.Overlay>
@@ -180,11 +182,13 @@ export function LibraryPage() {
             {/* grid */}
             <main className="flex-1 w-full">
                 {filteredGames.length === 0 ? (
-                    <div className="flex flex-col items-center justify-center p-12 text-center bg-gray-900/30 rounded-2xl border-2 border-dashed border-gray-800 min-h-100">
-                        <p className="text-gray-500 font-medium">Mission Failed</p>
-                        <p className="text-gray-500 font-medium">It seems no game survived your selection. Try a different strategy!</p>
-                        <button onClick={clearFilters} className="mt-2 text-primary text-sm font-bold hover:underline">Respawn Filters</button>
-                    </div>
+                    /* hay juegos pero ninguno coincide con los filtros */
+                    <EmptyState 
+                        title="Mission Failed"
+                        message="It seems no game survived your selection. Try a different strategy!"
+                        onClick={clearFilters}
+                        clickText="Respawn Filters"
+                    />
                 ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6 animate-in fade-in duration-500">
                         {filteredGames.map(game => (
