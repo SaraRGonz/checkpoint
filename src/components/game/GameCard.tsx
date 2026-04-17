@@ -5,9 +5,10 @@ import { Link } from 'react-router-dom';
 interface GameCardProps {
     game: Game; // se indica que va a recibir un objeto con forma de 'Game'
     showDetails?: boolean; // opcional para ocultar los detalles cuando se esté buscando un juego
+    hideBadge?: boolean;
 }
 
-export function GameCard({ game, showDetails = true }: GameCardProps) {
+export function GameCard({ game, showDetails = true, hideBadge = false }: GameCardProps) {
 
     // limitar los géneros y poner ... si hay más de dos
     const MAX_GENRES = 2;
@@ -63,9 +64,11 @@ export function GameCard({ game, showDetails = true }: GameCardProps) {
                         </span>
                         
                         {/* badge estado */}
-                        <Badge variant={game.status}>
-                            {game.status}
-                        </Badge>
+                        {!hideBadge && (
+                            <Badge variant={game.status}>
+                                {game.status}
+                            </Badge>
+                        )}
                     </div>
                 )}
             </div>

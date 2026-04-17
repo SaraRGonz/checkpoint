@@ -199,7 +199,7 @@ export function WishlistPage() {
                             <div key={game.id} className="flex flex-col gap-3 h-full">
                                 {/* tarjeta sin detalles solo con cover y título */}
                                 <div className="flex-1">
-                                    <GameCard game={game} showDetails={false} />
+                                    <GameCard game={game} hideBadge={true} />
                                 </div>
                                 
                                 {/* botones de acción debajo de la tarjeta */}
