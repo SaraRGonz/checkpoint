@@ -33,14 +33,15 @@ export function AddGamePage() {
         // si pasa la validación crea el objeto sin ID, el Contexto se lo pone
         try {
             // añade el await, el frontend espera a que el backend guarde el JSON
-            await addGame({
+            const newGameId = await addGame({
                 title,
                 platform,
                 status,
                 coverUrl: 'https://coltonconcrete.co.uk/wp-content/uploads/2021/10/placeholder1.jpg', // placeholder de que no hay imagen
+                genres: []
             });
             // redirige al usuario a la biblioteca una vez que se añade
-            navigate('/library');
+            navigate(`/game/${newGameId}`);
         } catch (err) {
             // si el servidor está apagado o falla muestra el error sin cambiar de página
             setError('Error de red al guardar el juego.');

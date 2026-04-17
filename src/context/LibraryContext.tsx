@@ -9,7 +9,7 @@ interface LibraryContextType {
 
     // las funciones devuelven una Promesa, ya que son peticiones de red (asíncronas)
     // función para añadir que usa Omit<Game, 'id'> porque el ID lo genera el servidor
-    addGame: (game: Omit<Game, 'id'>) => Promise<void>; 
+    addGame: (game: Omit<Game, 'id'>) => Promise<string>; 
     
     // función para editar que recibe el ID del juego a cambiar y un Partial<Game> 
     updateGame: (id: string, updates: Partial<Game>) => Promise<void>;
@@ -68,10 +68,11 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
             setIsLoading(true);
             setError(null);
             // el servidor recibe los datos y devuelve el juego ya con su ID creado
-            const savedGame = await libraryApi.addGameToLibrary(newGameData);
+            const newGame = await libraryApi.addGameToLibrary(newGameData);
             
             // actualiza el estado añadiendo a la lista el juego que ha confirmado el servidor
-            setGames((prevGames) => [...prevGames, savedGame]);
+            setGames((prevGames) => [...prevGames, newGame]);
+            return newGame.id;
         } catch (err: any) {
             setError(err.message || 'Error al añadir el juego');
             throw err; // lanza el error por si el componente quiere reaccionar
