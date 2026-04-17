@@ -7,12 +7,21 @@ interface Props {
 
 export function EditableInfoRow({ label, isEditing, children, valueDisplay }: Props) {
     return (
-        <div className="flex justify-between items-center gap-4 border-b border-gray-800/50 pb-2 min-h-10">
-            <span className="text-[11px] font-bold text-gray-500 uppercase tracking-wider">{label}:</span>
+        <div className={`flex justify-between items-start gap-4 border-b border-gray-800/50 py-4 min-h-12 transition-all duration-300 ${
+            isEditing ? 'bg-gray-800/20 px-3 -mx-3 rounded-xl' : ''
+        }`}>
+            <span className="text-[11px] font-bold text-gray-500 uppercase tracking-widest shrink-0 mt-1">
+                {label}:
+            </span>
+
             {isEditing ? (
-                <div className="grow max-w-50 animate-in zoom-in-95 duration-200">{children}</div>
+                <div className="grow max-w-55 animate-in zoom-in-95 duration-200">
+                    {children}
+                </div>
             ) : (
-                <span className="text-sm font-bold text-text text-right">{valueDisplay || 'N/A'}</span>
+                <div className="text-sm font-bold text-gray-100 text-right leading-relaxed wrap-break-words max-w-[70%]">
+                    {valueDisplay || <span className="text-gray-600 italic font-normal">Not specified</span>}
+                </div>
             )}
         </div>
     );

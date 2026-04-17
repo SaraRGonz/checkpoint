@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGameDetail } from '../hooks/useGameDetail';
 import { useLibrary } from '../hooks/useLibrary';
@@ -19,8 +19,15 @@ export function GameDetailPage() {
     const { deleteGame } = useLibrary(); 
     const navigate = useNavigate();      
     
-    // Estado para controlar la visibilidad del Modal
+    // estado de modales
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+    const [tempImageUrl, setTempImageUrl] = useState('');
+
+    // sincronizar URL temporal cuando se abre el modal
+    useEffect(() => {
+        if (draft) setTempImageUrl(draft.coverUrl);
+    }, [isImageModalOpen, draft]);
 
     if (isLoading || !game || !draft) return <div className="p-20 flex justify-center"><Spinner /></div>;
 
@@ -31,18 +38,20 @@ export function GameDetailPage() {
         navigate('/library'); // Redirige a la biblioteca tras borrar
     };
 
+    const handleSaveImage = () => {
+        updateDraftField('coverUrl', tempImageUrl);
+        setIsImageModalOpen(false);
+    };
+
     // configuración de los botones del modal
-    const modalButtons: ModalButton[] = [
-        { 
-            content: 'Cancel', 
-            variant: 'secondary', 
-            onClick: () => setIsDeleteModalOpen(false) 
-        },
-        { 
-            content: 'Delete', 
-            variant: 'danger', 
-            onClick: handleDeleteConfirm 
-        }
+    const deleteModalButtons: ModalButton[] = [
+        { content: 'Cancel', variant: 'secondary', onClick: () => setIsDeleteModalOpen(false) },
+        { content: 'Delete', variant: 'danger', onClick: handleDeleteConfirm }
+    ];
+
+    const imageModalButtons: ModalButton[] = [
+        { content: 'Cancel', variant: 'secondary', onClick: () => setIsImageModalOpen(false) },
+        { content: 'Update Image', variant: 'primary', onClick: handleSaveImage }
     ];
 
     return (
@@ -59,10 +68,14 @@ export function GameDetailPage() {
             {/* grid principal con columna de portada info y notas */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
                 <div className="lg:col-span-3">
-                    <GameCoverColumn draft={draft} isEditing={isEditing} updateDraftField={updateDraftField} />
+                    <GameCoverColumn 
+                        draft={draft} 
+                        isEditing={isEditing} 
+                        onOpenImageModal={() => setIsImageModalOpen(true)} 
+                    />
                 </div>
 
-                <div className="lg:col-span-4 h-full">
+                <div className="lg:col-span-4">
                     <GameInfoColumn draft={draft} isEditing={isEditing} updateDraftField={updateDraftField} />
                 </div>
 
@@ -78,17 +91,33 @@ export function GameDetailPage() {
             {/* pie de página con metadatos de fechas y rawgid */}
             <GameDetailFooter addedAt={game.addedAt} updatedAt={game.updatedAt} rawgId={game.rawgId} />
 
-            {/* Inserción del Modal */}
-            <Modal
-                isOpen={isDeleteModalOpen}
-                onClose={() => setIsDeleteModalOpen(false)}
-                title="Delete Game"
-                footerButtons={modalButtons}
-            >
+            {/* modal para borrar juego */}
+            <Modal isOpen={isDeleteModalOpen} onClose={() => setIsDeleteModalOpen(false)} title="Delete Game" footerButtons={deleteModalButtons}>
                 <div className="space-y-4">
-                    <p> <span className="font-bold">CRITICAL:</span> This action cannot be undone.
-                        Are you sure you want to delete <span className="font-bold text-white">"{game.title}"</span>?</p>
-                    <p className="text-sm text-gray-400">This is a permadeath move. Your data for this game will be erased from this dimension forever.</p>
+                    <p>Are you sure you want to delete <span className="font-bold text-white">"{game.title}"</span>?</p>
+                    <p className="text-sm text-gray-400">This action cannot be undone.</p>
+                </div>
+            </Modal>
+
+            {/* modal para cambiar la imagen */}
+            <Modal isOpen={isImageModalOpen} onClose={() => setIsImageModalOpen(false)} title="Change Cover Image" footerButtons={imageModalButtons}>
+                <div className="space-y-6">
+                    <div className="space-y-2">
+                        <label className="text-xs font-bold text-gray-500 uppercase tracking-widest">Image URL</label>
+                        <input 
+                            type="text"
+                            value={tempImageUrl}
+                            onChange={(e) => setTempImageUrl(e.target.value)}
+                            className="w-full bg-gray-950 border border-gray-700 p-3 rounded-lg text-sm text-gray-200 focus:border-primary outline-none transition-all"
+                            placeholder="https://..."
+                        />
+                    </div>
+                    <div className="pt-2">
+                        <p className="text-[10px] uppercase text-gray-600 font-bold mb-3 tracking-[0.2em] text-center">Preview</p>
+                        <div className="w-32 mx-auto aspect-3/4] rounded-xl overflow-hidden border-2 border-gray-700 shadow-2xl bg-gray-950">
+                            <img src={tempImageUrl} alt="Preview" className="w-full h-full object-cover" onError={(e) => (e.currentTarget.src = 'https://images.placeholders.dev/?width=300&height=400&text=Invalid+URL&bgColor=%230b1026&textColor=%23ffffff')} />
+                        </div>
+                    </div>
                 </div>
             </Modal>
         </div>
