@@ -20,24 +20,33 @@ export function useFilters(initialGames: Game[]) {
         const genres = new Set<string>();
         initialGames.forEach(game => {
             if (game.genres && game.genres.length > 0) {
-                game.genres.forEach(g => genres.add(g));
+                game.genres.forEach(g => {
+                    // si hay datos antiguos los unifica en el ActionMenu
+                    const formatted = g.charAt(0).toUpperCase() + g.slice(1).toLowerCase();
+                    genres.add(formatted);
+                });
             }
         });
-        return Array.from(genres).sort(); // los ordena alfabéticamente
+        return Array.from(genres).sort(); 
     }, [initialGames]);
 
     // filtra y después ordena los juegos
     const filteredGames = useMemo(() => {
-        // filtrar
-        let result = initialGames.filter((game) => {
-            const matchesSearch = game.title.toLowerCase().includes(searchQuery.toLowerCase());
-            const matchesStatus = statusFilter === 'all' || game.status === statusFilter;
-            const matchesGenre = genreFilter === 'all' || (game.genres && game.genres.includes(genreFilter));
-            const matchesPlatform = platformFilter === 'all' || game.platform === platformFilter;
-            const matchesRating = ratingFilter === 'all' || (game.rating && game.rating.toString() === ratingFilter);
-            
-            return matchesSearch && matchesStatus && matchesGenre && matchesPlatform && matchesRating;
-        });
+        let result = initialGames;
+        if (searchQuery) {
+            result = result.filter(game => game.title.toLowerCase().includes(searchQuery.toLowerCase()));
+        }
+        if (statusFilter !== 'all') {
+            result = result.filter(game => game.status === statusFilter);
+        }
+        if (genreFilter !== 'all') {
+            result = result.filter(game => 
+                game.genres?.some(g => g.toLowerCase() === genreFilter.toLowerCase())
+            );
+        }
+        if (platformFilter !== 'all') {
+            result = result.filter(game => game.platform === platformFilter);
+        }
 
         // ordenar
         result.sort((a, b) => {
