@@ -71,8 +71,8 @@ export function AddGamePage() {
                         </span>
                     </Button>
                     {/* botón de cancelar */}
-                    <Button onClick={() => navigate('/library')} variant="secondary">
-                        <span className="flex items-center justify-center gap-2 text-gray-500">
+                    <Button onClick={() => navigate('/library')} variant="danger">
+                        <span className="flex items-center justify-center gap-2 text-text">
                             Cancel
                         </span>
                     </Button>
@@ -108,7 +108,7 @@ export function AddGamePage() {
                             value={coverUrl === DEFAULT_COVER_URL ? '' : coverUrl}
                             onChange={(e) => setCoverUrl(e.target.value)}
                             placeholder="https://..."
-                            className="w-full bg-gray-950 border border-gray-700 text-xs p-2 rounded outline-none focus:border-primary transition-colors placeholder:text-gray-600"
+                            className="w-full bg-gray-950 border border-gray-700 text-gray-500 text-xs p-2 rounded outline-none focus:border-primary transition-colors placeholder:text-gray-600"
                         />
                     </div>
                 </div>
@@ -124,7 +124,7 @@ export function AddGamePage() {
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
                             placeholder="e.g. Baldur's Gate III"
-                            className="w-full bg-transparent text-4xl font-black uppercase tracking-tighter text-gray-100 placeholder:text-gray-800 outline-none focus:border-primary border border-transparent focus:bg-gray-950 p-2 rounded-xl transition-all"
+                            className="w-full bg-transparent text-4xl font-black tracking-tighter text-gray-100 placeholder:text-gray-800 outline-none focus:border-primary border border-transparent focus:bg-gray-950 p-2 rounded-xl transition-all"
                         />
                     </div>
 
