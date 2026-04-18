@@ -42,7 +42,7 @@ export function TagInput({ tags, onChange, placeholder = "Add genre and press en
                 onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addTag())}
                 onBlur={addTag}
                 placeholder={placeholder}
-                className="bg-gray-950 border border-gray-700 text-text text-xs p-2 rounded w-full outline-none focus:border-primary transition-colors"
+                className="bg-gray-950 border border-gray-700 text-text text-xs placeholder:text-gray-600 p-2 rounded w-full outline-none focus:border-primary transition-colors"
             />
         </div>
     );
