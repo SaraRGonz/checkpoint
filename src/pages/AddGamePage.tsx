@@ -7,9 +7,10 @@ import { ActionMenu } from '../components/ui/ActionMenu/ActionMenu';
 import { STATUS_LIST, PLATFORM_LIST } from '../utils/constants';
 import type { GameStatus } from '../types/game';
 import { PlusIcon } from '../components/ui/Icons';
+import placeholderImg from '../assets/placeholder.jpg';
 
 // constante para la imagen por defecto
-const DEFAULT_COVER_URL = 'https://coltonconcrete.co.uk/wp-content/uploads/2021/10/placeholder1.jpg';
+const DEFAULT_COVER_URL = placeholderImg;
 
 export function AddGamePage() {
     const { addGame } = useLibrary();

@@ -9,6 +9,7 @@ import { GameNotes } from '../components/game/GameNotes';
 import { GameDetailFooter } from '../components/game/GameDetailFooter';
 import { Spinner } from '../components/ui/Spinner';
 import { Modal, type ModalButton } from '../components/ui/Modal';
+import placeholderImg from '../assets/placeholder.jpg';
 
 export function GameDetailPage() {
     const { 
@@ -115,8 +116,12 @@ export function GameDetailPage() {
                     <div className="pt-2">
                         <p className="text-[10px] uppercase text-gray-600 font-bold mb-3 tracking-[0.2em] text-center">Preview</p>
                         <div className="w-32 mx-auto aspect-3/4 rounded-xl overflow-hidden border-2 border-gray-700 shadow-2xl bg-gray-950">
-                            <img src={tempImageUrl} alt="Preview" className="w-full h-full object-cover" onError={(e) => (e.currentTarget.src = 'https://coltonconcrete.co.uk/wp-content/uploads/2021/10/placeholder1.jpg')} />
-                        </div>
+                            <img 
+                                src={tempImageUrl} 
+                                alt="Preview" 
+                                className="w-full h-full object-cover" 
+                                onError={(e) => (e.currentTarget.src = placeholderImg)} 
+                            />                        </div>
                     </div>
                 </div>
             </Modal>

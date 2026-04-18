@@ -9,6 +9,7 @@ import { EmptyState } from '../components/ui/EmptyState';
 import { Button } from '../components/ui/Button';
 import type { Game, GameStatus } from '../types/game';
 import { PlusIcon, HeartIcon, RadarIcon } from '../components/ui/Icons';
+import placeholderImg from '../assets/placeholder.jpg';
 
 export function SearchPage() {
     const navigate = useNavigate();
@@ -39,7 +40,7 @@ export function SearchPage() {
                 id: `rawg-${rawg.rawgId}`,
                 rawgId: rawg.rawgId,
                 title: rawg.title,
-                coverUrl: rawg.coverUrl || 'https://coltonconcrete.co.uk/wp-content/uploads/2021/10/placeholder1.jpg',
+                coverUrl: rawg.coverUrl || placeholderImg,
                 platform: 'PC', 
                 status: 'Wishlist', 
                 releaseYear: rawg.releaseYear,
