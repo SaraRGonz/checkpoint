@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { useActionMenu } from './ActionMenuContext';
+import { ChevronDownIcon } from '../Icons';
 
 interface Props {
     children: ReactNode;
@@ -20,9 +21,7 @@ export function ActionMenuButton({ children }: Props) {
             {/* span con truncate evita que un texto muy largo rompa visualmente el ancho del botón */}
             <span className="truncate">{children}</span>
             {/* icono de flecha decorativa hacia abajo para dar a entender que es un desplegable */}
-            <svg className="w-4 h-4 ml-2 shrink-0 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-            </svg>
+            <ChevronDownIcon className="w-4 h-4 ml-2 shrink-0 text-gray-500" />
         </button>
     );
 }

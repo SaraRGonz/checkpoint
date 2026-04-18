@@ -8,6 +8,7 @@ import { EmptyState } from '../components/ui/EmptyState';
 import { Button } from '../components/ui/Button';
 import { ActionMenu } from '../components/ui/ActionMenu/ActionMenu';
 import { STATUS_LIST, PLATFORM_LIST } from '../utils/constants';
+import { RadarIcon, PlusIcon } from '../components/ui/Icons';
 
 export function LibraryPage() {
     const { games } = useLibrary();
@@ -55,17 +56,13 @@ export function LibraryPage() {
                 <div className="flex flex-col gap-3">
                     <Button variant="primary" onClick={() => navigate('/search')}>
                         <span className="flex items-center justify-center gap-2">
-                            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                            </svg>
+                            <RadarIcon className="w-5 h-5" />
                             Add game with RAWG
                         </span>
                     </Button>
                     <Button variant="secondary" onClick={() => navigate('/library/add')}>
                         <span className="flex items-center justify-center gap-2">
-                            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-                            </svg>
+                            <PlusIcon className="w-5 h-5" />
                             Add game manually
                         </span>
                     </Button>

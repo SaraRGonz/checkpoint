@@ -6,6 +6,7 @@ import { TagInput } from '../components/ui/TagInput';
 import { ActionMenu } from '../components/ui/ActionMenu/ActionMenu';
 import { STATUS_LIST, PLATFORM_LIST } from '../utils/constants';
 import type { GameStatus } from '../types/game';
+import { PlusIcon } from '../components/ui/Icons';
 
 // constante para la imagen por defecto
 const DEFAULT_COVER_URL = 'https://coltonconcrete.co.uk/wp-content/uploads/2021/10/placeholder1.jpg';
@@ -64,9 +65,7 @@ export function AddGamePage() {
                     {/* botón de guardar */}
                     <Button onClick={handleSubmit} variant="primary">
                         <span className="flex items-center justify-center gap-2">
-                            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-                            </svg>
+                            <PlusIcon className="w-5 h-5" />
                             Create Game
                         </span>
                     </Button>

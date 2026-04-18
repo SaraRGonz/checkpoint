@@ -8,6 +8,7 @@ import { Spinner } from '../components/ui/Spinner';
 import { EmptyState } from '../components/ui/EmptyState';
 import { Button } from '../components/ui/Button';
 import type { Game, GameStatus } from '../types/game';
+import { PlusIcon, HeartIcon, RadarIcon } from '../components/ui/Icons';
 
 export function SearchPage() {
     const navigate = useNavigate();
@@ -145,12 +146,8 @@ export function SearchPage() {
                             title="Awaiting coordinates..."
                             message="Use the search bar above to query millions of games from the RAWG API."
                             onSecondaryClick={() => navigate('/library/add')}
-                            secondaryClickText="Add Manual Game"
-                            icon={
-                                <svg className="w-16 h-16 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                </svg>
-                            }
+                            secondaryClickText="Add game manually"
+                            icon={ <RadarIcon className="w-16 h-16 text-accent" strokeWidth="1.5" /> }
                         />
                     )}
 
@@ -174,9 +171,7 @@ export function SearchPage() {
                                             className="flex-1 h-full px-2"
                                         >
                                             <div className="flex items-center justify-center gap-1.5 text-xs py-1 h-full">
-                                                <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-                                                </svg>
+                                                <PlusIcon className="w-4 h-4 shrink-0" />
                                                 <span className="leading-tight">Add to Library</span> 
                                             </div>
                                         </Button>
@@ -187,9 +182,7 @@ export function SearchPage() {
                                             className="flex-1 h-full px-2"
                                         >
                                             <div className="flex items-center justify-center gap-1.5 text-xs text-text py-1 h-full">
-                                                <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                                                </svg>
+                                                <HeartIcon className="w-4 h-4 shrink-0" />
                                                 <span className="leading-tight">Wishlist</span>
                                             </div>
                                         </Button>

@@ -1,3 +1,5 @@
+import { StarIcon } from '../ui/Icons'
+
 interface StarRatingProps {
     rating: number;
     maxStars?: number; // por si en algún punto se quieren poner más o menos estrellas
@@ -20,22 +22,11 @@ export function StarRating({ rating, maxStars = 5, onChange, disabled = false }:
                 const isFilled = starNumber <= rating;
 
                 return (
-                    <svg
-                        key={starNumber} // el key que pide React para identificar cada estrella
+                    <StarIcon
+                        key={starNumber}
                         onClick={() => !disabled && onChange?.(starNumber)}
-                        className={`w-5 h-5 ${isFilled ? 'text-filledstar fill-current' : 'text-emptystar fill-current'
-                        } ${!disabled && onChange ? 'cursor-pointer hover:scale-110' : ''}`}
-                        xmlns="http://www.w3.org/2000/svg" // donde se define el idioma usado para dibujar el svg
-                        viewBox="0 0 24 24" // marca la posición y la dimension
-                        stroke="currentColor" // hereda el color que corresponda de className
-                        strokeWidth="2" // grosor del trazo
-                    >
-                        <path 
-                        strokeLinecap="round" // redondea las esquinas de la estrella
-                        strokeLinejoin="round" 
-                        // coordenadas de dibujo
-                        d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z"/> 
-                    </svg>
+                        className={`w-5 h-5 ${isFilled ? 'text-filledstar fill-current' : 'text-emptystar fill-current'} ${!disabled && onChange ? 'cursor-pointer hover:scale-110' : ''}`}
+                    />
                 );
             })}
         </div>

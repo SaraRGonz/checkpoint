@@ -1,3 +1,5 @@
+import { SearchIcon } from './Icons';
+
 interface SearchInputProps {
     value: string;
     onChange: (newValue: string) => void; // cuando el usuario escribe algo, llama a esta función pasándole el texto nuevo. "Void" porque no se espera que devuelva nada
@@ -9,14 +11,7 @@ export function SearchInput({ value, onChange, placeholder = 'Search game...' }:
         <div className="relative w-full max-w-md">
             {/* div con el icono de la lupa. "pointer-events-none" para que los clicks atraviesen la lupa y se seleccione el input*/}
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"> 
-                <svg 
-                className="h-5 w-5 text-searchinput-icon" 
-                xmlns="http://www.w3.org/2000/svg" 
-                viewBox="0 0 20 20" 
-                fill="currentColor">
-                    <path fillRule="evenodd" 
-                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
-                </svg>
+                <SearchIcon className="h-5 w-5 text-searchinput-icon" />
             </div>
             
             {/* input donde escribir la búsqueda*/}

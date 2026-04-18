@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { useActionMenu } from './ActionMenuContext';
+import { CheckIcon } from '../Icons';
 
 interface Props {
     value: string;
@@ -33,9 +34,7 @@ export function ActionMenuItem({ value, children, selected }: Props) {
             <span className="w-5 mr-2 flex justify-center items-center">
                 {/* si la opción está seleccionada pone el check */}
                 {isSelected && (
-                    <svg className="w-4 h-4 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                        <polyline points="20 6 9 17 4 12" />
-                    </svg>
+                    <CheckIcon className="w-4 h-4 text-primary" />
                 )}
             </span>
             {/* estilos de fuente si está seleccionada */}
