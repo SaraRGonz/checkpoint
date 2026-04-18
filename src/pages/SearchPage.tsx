@@ -160,7 +160,9 @@ export function SearchPage() {
                             {results.map(game => (
                                 <div key={game.id} className="flex flex-col gap-3 h-full bg-gray-900/40 p-3 rounded-2xl border border-gray-800 shadow-xl">
                                     <div className="flex-1">
-                                        <GameCard game={game} showDetails={false} />
+                                        <GameCard game={game} 
+                                        showDetails={false}
+                                        disableLink={true} />
                                     </div>
                                     
                                     {/* BOTONES */}
