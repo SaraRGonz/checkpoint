@@ -80,8 +80,38 @@ body {
 }
 
 .light {
+    /* Fondo y texto principales */
     --color-background: #F3F4F6;
     --color-text: #111827;
+
+    /* Invertir blanco y negro (para clases fijas como text-white o bg-black) */
+    --color-white: #111827; 
+    --color-black: #ffffff; 
+
+    /* Invertir la escala de grises de tailwind */
+    --color-gray-950: #ffffff;
+    --color-gray-900: #f9fafb;
+    --color-gray-800: #e5e7eb;
+    --color-gray-700: #d1d5db;
+    --color-gray-600: #9ca3af;
+    --color-gray-500: #6b7280;
+    --color-gray-400: #4b5563;
+    --color-gray-300: #374151;
+    --color-gray-200: #1f2937;
+    --color-gray-100: #111827;
+    --color-gray-50:  #030712;
+
+    /* Ajustes de componentes para Light Mode */
+    --color-gray: #9ca3af; 
+    --color-badge-default: #ffffff;
+    --color-badge-bgdefault: #6b7280;
+
+    /* Texto blanco en dangerbutton */
+    --color-dangerbutton-text: #ffffff; 
+
+    /* Suavizado del buscador */
+    --color-searchinput-bg: var(--color-gray-800);
+    --color-searchinput-placeholder: var(--color-gray-500);
 }
 
 /* ---- CUSTOM SCROLLBAR ---- */
