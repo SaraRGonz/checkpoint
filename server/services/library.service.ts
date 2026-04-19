@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid'; // herramienta para crear IDs únicos
 import { Game } from '../types/game';
 
 // ruta al archivo JSON
-const dataPath = path.join(__dirname, '../data/library.json');
+const dataPath = path.join(process.cwd(), 'data', 'library.json');
 
 // --- FUNCIONES INTERNAS ---
 const getLibrary = async (): Promise<Game[]> => {
