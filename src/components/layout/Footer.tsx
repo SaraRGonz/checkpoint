@@ -4,7 +4,7 @@ export function Footer() {
     return (
         <footer className="bg-gray-900 border-t border-gray-800 py-6 mt-auto">
             <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
-                <p>Powered by <a href="https://rawg.io/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">RAWG API</a></p>
+                <p>Powered by <a href="https://rawg.io/apidocs" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">RAWG API</a></p>
                 <div className="flex gap-4 mt-4 md:mt-0">
                     <p>&copy; {currentYear} Checkpoint. All rights reserved.</p>
                 </div>
