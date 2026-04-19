@@ -1,5 +1,5 @@
 import type { Game } from '../../types/game';
-import { PencilIcon } from '../ui/Icons';
+import { EditIcon } from '../ui/Icons';
 
 interface GameCoverColumnProps {
     draft: Game;
@@ -24,7 +24,7 @@ export function GameCoverColumn({ draft, isEditing, onOpenImageModal }: GameCove
                         className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer"
                     >
                         <div className="bg-primary p-3 rounded-full shadow-lg transform scale-90 group-hover:scale-100 transition-transform">
-                            <PencilIcon className="w-6 h-6 text-background" />
+                            <EditIcon className="w-6 h-6 text-background" />
                         </div>
                     </button>
                 )}

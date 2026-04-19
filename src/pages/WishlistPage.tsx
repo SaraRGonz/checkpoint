@@ -11,7 +11,7 @@ import { ActionMenu } from '../components/ui/ActionMenu/ActionMenu';
 import { Modal, type ModalButton } from '../components/ui/Modal'; 
 import { PLATFORM_LIST } from '../utils/constants';
 import type { Game } from '../types/game';
-import { TrashIcon, RadarIcon, PlusIcon } from '../components/ui/Icons';
+import { TrashIcon, SearchIcon, PlusIcon } from '../components/ui/Icons';
 import { Spinner } from '../components/ui/Spinner';
 
 export function WishlistPage() {
@@ -101,7 +101,7 @@ export function WishlistPage() {
                 <div className="flex flex-col gap-3">
                     <Button variant="primary" onClick={() => navigate('/search')}>
                         <span className="flex items-center justify-center gap-2">
-                            <RadarIcon className="w-5 h-5" />
+                            <SearchIcon className="w-5 h-5" />
                             Add game with RAWG
                         </span>
                     </Button>

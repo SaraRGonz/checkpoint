@@ -3,30 +3,7 @@ import type { SVGProps } from 'react';
 // permite que a cualquier icono se le pueda pasar clases de tailwind o propiedades nativas de un svg como onclick
 interface IconProps extends SVGProps<SVGSVGElement> {}
 
-export function SearchIcon(props: IconProps) {
-    return (
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" {...props}>
-            <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
-        </svg>
-    );
-}
-
-export function ChevronDownIcon(props: IconProps) {
-    return (
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" {...props}>
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-        </svg>
-    );
-}
-
-export function CheckIcon(props: IconProps) {
-    return (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" {...props}>
-            <polyline points="20 6 9 17 4 12" />
-        </svg>
-    );
-}
-
+// logo de checkpoint
 export function LogoIcon(props: IconProps) {
     return (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" {...props}>
@@ -35,6 +12,34 @@ export function LogoIcon(props: IconProps) {
     );
 }
 
+// lupa
+export function SearchIcon(props: IconProps) {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" {...props}>
+            <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
+        </svg>
+    );
+}
+
+// flecha hacia abajo
+export function ChevronDownIcon(props: IconProps) {
+    return (
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" {...props}>
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+        </svg>
+    );
+}
+
+// check 
+export function CheckIcon(props: IconProps) {
+    return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" {...props}>
+            <polyline points="20 6 9 17 4 12" />
+        </svg>
+    );
+}
+
+// casa
 export function HomeIcon(props: IconProps) {
     return (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" {...props}>
@@ -44,6 +49,7 @@ export function HomeIcon(props: IconProps) {
     );
 }
 
+// x del navbar para library
 export function LibraryIcon(props: IconProps) {
     return (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" {...props}>
@@ -52,6 +58,7 @@ export function LibraryIcon(props: IconProps) {
     );
 }
 
+// círculo del navbar para wishlist
 export function WishlistNavIcon(props: IconProps) {
     return (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" {...props}>
@@ -60,6 +67,7 @@ export function WishlistNavIcon(props: IconProps) {
     );
 }
 
+// triángulo del navbar para search
 export function SearchNavIcon(props: IconProps) {
     return (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" {...props}>
@@ -68,6 +76,7 @@ export function SearchNavIcon(props: IconProps) {
     );
 }
 
+// cuadrado del navbar para addgame
 export function AddGameIcon(props: IconProps) {
     return (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" {...props}>
@@ -76,6 +85,7 @@ export function AddGameIcon(props: IconProps) {
     );
 }
 
+// estrella
 export function StarIcon(props: IconProps) {
     return (
         <svg viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" {...props}>
@@ -84,14 +94,7 @@ export function StarIcon(props: IconProps) {
     );
 }
 
-export function PencilIcon(props: IconProps) {
-    return (
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5" {...props}>
-            <path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-        </svg>
-    );
-}
-
+// lápiz con libreta
 export function EditIcon(props: IconProps) {
     return (
         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" {...props}>
@@ -100,6 +103,7 @@ export function EditIcon(props: IconProps) {
     );
 }
 
+// cubo de basura
 export function TrashIcon(props: IconProps) {
     return (
         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" {...props}>
@@ -108,6 +112,7 @@ export function TrashIcon(props: IconProps) {
     );
 }
 
+// disquete "guardar"
 export function SaveIcon(props: IconProps) {
     return (
         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" {...props}>
@@ -118,6 +123,7 @@ export function SaveIcon(props: IconProps) {
     );
 }
 
+// una x
 export function CrossIcon(props: IconProps) {
     return (
         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" {...props}>
@@ -127,6 +133,7 @@ export function CrossIcon(props: IconProps) {
     );
 }
 
+// triángulo alerta
 export function AlertIcon(props: IconProps) {
     return (
         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" {...props}>
@@ -135,6 +142,7 @@ export function AlertIcon(props: IconProps) {
     );
 }
 
+// fantasma
 export function GhostIcon(props: IconProps) {
     return (
         <svg viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg" {...props}>
@@ -143,6 +151,7 @@ export function GhostIcon(props: IconProps) {
     );
 }
 
+// un +
 export function PlusIcon(props: IconProps) {
     return (
         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" {...props}>
@@ -151,6 +160,7 @@ export function PlusIcon(props: IconProps) {
     );
 }
 
+// corazón
 export function HeartIcon(props: IconProps) {
     return (
         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" {...props}>
@@ -159,10 +169,3 @@ export function HeartIcon(props: IconProps) {
     );
 }
 
-export function RadarIcon(props: IconProps) {
-    return (
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" {...props}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-        </svg>
-    );
-}

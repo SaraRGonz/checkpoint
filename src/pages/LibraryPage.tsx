@@ -8,7 +8,7 @@ import { EmptyState } from '../components/ui/EmptyState';
 import { Button } from '../components/ui/Button';
 import { ActionMenu } from '../components/ui/ActionMenu/ActionMenu';
 import { STATUS_LIST, PLATFORM_LIST } from '../utils/constants';
-import { RadarIcon, PlusIcon } from '../components/ui/Icons';
+import { SearchIcon, PlusIcon } from '../components/ui/Icons';
 import { Spinner } from '../components/ui/Spinner';
 
 export function LibraryPage() {
@@ -65,7 +65,7 @@ export function LibraryPage() {
                 <div className="flex flex-col gap-3">
                     <Button variant="primary" onClick={() => navigate('/search')}>
                         <span className="flex items-center justify-center gap-2">
-                            <RadarIcon className="w-5 h-5" />
+                            <SearchIcon className="w-5 h-5" />
                             Add game with RAWG
                         </span>
                     </Button>

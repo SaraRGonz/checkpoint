@@ -8,7 +8,7 @@ import { Spinner } from '../components/ui/Spinner';
 import { EmptyState } from '../components/ui/EmptyState';
 import { Button } from '../components/ui/Button';
 import type { Game, GameStatus } from '../types/game';
-import { PlusIcon, HeartIcon, RadarIcon } from '../components/ui/Icons';
+import { PlusIcon, HeartIcon, SearchIcon } from '../components/ui/Icons';
 import placeholderImg from '../assets/placeholder.jpg';
 
 export function SearchPage() {
@@ -148,7 +148,7 @@ export function SearchPage() {
                             message="Use the search bar above to query millions of games from the RAWG API."
                             onSecondaryClick={() => navigate('/library/add')}
                             secondaryClickText="Add game manually"
-                            icon={ <RadarIcon className="w-16 h-16 text-accent" strokeWidth="1.5" /> }
+                            icon={ <SearchIcon className="w-16 h-16 text-accent" strokeWidth="1.5" /> }
                         />
                     )}
 
