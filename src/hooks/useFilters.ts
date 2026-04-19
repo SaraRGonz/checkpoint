@@ -48,6 +48,10 @@ export function useFilters(initialGames: Game[]) {
             result = result.filter(game => game.platform === platformFilter);
         }
 
+        if (ratingFilter !== 'all') {
+            result = result.filter(game => game.rating === parseInt(ratingFilter, 10));
+        }
+
         // ordenar
         result.sort((a, b) => {
             switch (sortOption) {
