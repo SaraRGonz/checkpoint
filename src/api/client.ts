@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:3000/api/v1';
+const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api/v1';
 
 // función genérica tipada (<T>) para hacer peticiones
 export async function fetchApi<T>(endpoint: string, options?: RequestInit): Promise<T> {
