@@ -9,9 +9,10 @@ import { Button } from '../components/ui/Button';
 import { ActionMenu } from '../components/ui/ActionMenu/ActionMenu';
 import { STATUS_LIST, PLATFORM_LIST } from '../utils/constants';
 import { RadarIcon, PlusIcon } from '../components/ui/Icons';
+import { Spinner } from '../components/ui/Spinner';
 
 export function LibraryPage() {
-    const { games } = useLibrary();
+    const { games, isLoading } = useLibrary();
     const navigate = useNavigate();
 
     // excluye los juegos con estado wishlist
@@ -30,11 +31,19 @@ export function LibraryPage() {
     } = useFilters(libraryGames);
 
     const sortLabels: Record<SortOption, string> = {
-        'added-desc': 'Recently Added',
-        'updated-desc': 'Recently Updated',
+        'added-desc': 'Recently added',
+        'updated-desc': 'Recently updated',
         'title-asc': 'Alphabetical (A-Z)',
         'title-desc': 'Alphabetical (Z-A)'
     };
+
+    if (isLoading) {
+        return (
+            <div className="flex justify-center items-center min-h-[50vh]">
+                <Spinner />
+            </div>
+        );
+    }
 
     if (games.length === 0) {
         return (

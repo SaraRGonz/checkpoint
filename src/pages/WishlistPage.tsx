@@ -12,9 +12,10 @@ import { Modal, type ModalButton } from '../components/ui/Modal';
 import { PLATFORM_LIST } from '../utils/constants';
 import type { Game } from '../types/game';
 import { TrashIcon, RadarIcon, PlusIcon } from '../components/ui/Icons';
+import { Spinner } from '../components/ui/Spinner';
 
 export function WishlistPage() {
-    const { games, updateGame, deleteGame } = useLibrary();
+    const { games, updateGame, deleteGame, isLoading } = useLibrary();
     const navigate = useNavigate();
 
     // estado para borrado que guarda el objeto del juego que se quiere borrar
@@ -35,8 +36,8 @@ export function WishlistPage() {
     } = useFilters(wishlistGames);
 
     const sortLabels: Record<SortOption, string> = {
-        'added-desc': 'Recently Added',
-        'updated-desc': 'Recently Updated',
+        'added-desc': 'Recently added',
+        'updated-desc': 'Recently updated',
         'title-asc': 'Alphabetical (A-Z)',
         'title-desc': 'Alphabetical (Z-A)'
     };
@@ -67,6 +68,14 @@ export function WishlistPage() {
             onClick: handleDeleteConfirm 
         }
     ];
+
+    if (isLoading) {
+        return (
+            <div className="flex justify-center items-center min-h-[50vh]">
+                <Spinner />
+            </div>
+        );
+    }
 
     // si no hay ningún juego en la wishlist
     if (wishlistGames.length === 0) {
