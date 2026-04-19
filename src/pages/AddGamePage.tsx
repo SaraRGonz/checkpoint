@@ -34,6 +34,22 @@ export function AddGamePage() {
             return;
         }
 
+        // validación estricta de url si el usuario escribe algo en el input
+        const finalCoverUrl = coverUrl.trim();
+        if (finalCoverUrl !== '' && finalCoverUrl !== DEFAULT_COVER_URL) {
+            try {
+                // intenta crear un objeto url y si falla es que no tiene un formato válido
+                const url = new URL(finalCoverUrl);
+                // comprueba que sea un enlace web http o https
+                if (url.protocol !== 'http:' && url.protocol !== 'https:') {
+                    throw new Error('Invalid protocol');
+                }
+            } catch (_) {
+                setError('Please enter a valid link for the image (e.g., https://...)');
+                return; // bloquea el envío si no es válida
+            }
+        }
+
         try {
             // construye el objeto Omit<Game, 'id'> con todos los campos
             const newGameId = await addGame({
