@@ -65,7 +65,6 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
     // añadir juego (POST)
     const addGame = async (newGameData: Omit<Game, 'id'>) => {
         try {
-            setIsLoading(true);
             setError(null);
             // el servidor recibe los datos y devuelve el juego ya con su ID creado
             const newGame = await libraryApi.addGameToLibrary(newGameData);
@@ -76,15 +75,12 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
         } catch (err: any) {
             setError(err.message || 'Error al añadir el juego');
             throw err; // lanza el error por si el componente quiere reaccionar
-        } finally {
-            setIsLoading(false);
-        }
+        } 
     };
 
     // actualizar juego (PUT)
     const updateGame = async (id: string, updates: Partial<Game>) => {
         try {
-            setIsLoading(true);
             setError(null);
             // avisa al servidor del cambio y devuelve el objeto juego actualizado
             const updatedGame = await libraryApi.updateGameInLibrary(id, updates);
@@ -97,15 +93,12 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
         } catch (err: any) {
             setError(err.message || 'Error al actualizar el juego');
             throw err;
-        } finally {
-            setIsLoading(false);
-        }
+        } 
     };
 
     // borrar juego (DELETE)
     const deleteGame = async (id: string) => {
         try {
-            setIsLoading(true);
             setError(null);
             // petición al servidor para eliminar el recurso físicamente
             await libraryApi.deleteGameFromLibrary(id);
@@ -115,9 +108,7 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
         } catch (err: any) {
             setError(err.message || 'Error al borrar el juego');
             throw err;
-        } finally {
-            setIsLoading(false);
-        }
+        } 
     };
 
     // renderizado del proveedor
