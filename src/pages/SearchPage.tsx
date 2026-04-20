@@ -168,7 +168,7 @@ export function SearchPage() {
                                         
                                         <Button 
                                             variant="primary" 
-                                            onClick={() => handleSaveGame(game, 'Backlog')} 
+                                            onClick={() => handleSaveGame(game, 'Queue')} 
                                             className="flex-1 h-full px-2"
                                         >
                                             <div className="flex items-center justify-center gap-1.5 text-xs py-1 h-full">

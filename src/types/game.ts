@@ -1,5 +1,5 @@
 // define los 5 estados posibles 
-export type GameStatus = 'Wishlist' | 'Backlog' | 'Playing' | 'Completed' | 'Dropped';
+export type GameStatus = 'Wishlist' | 'Queue' | 'Playing' | 'Completed' | 'Dropped';
 
 export interface Game {
     id: string;

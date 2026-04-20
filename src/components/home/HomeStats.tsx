@@ -18,7 +18,7 @@ export function HomeStats() {
     };
 
     // define los estados exactos y el orden
-    const statuses: GameStatus[] = ['Playing', 'Backlog', 'Completed', 'Dropped'];
+    const statuses: GameStatus[] = ['Playing', 'Queue', 'Completed', 'Dropped'];
 
     return (
         <div className="h-full flex flex-col justify-center gap-8">

@@ -44,8 +44,8 @@ export function WishlistPage() {
 
     // funciones para los botones de acción de cada tarjeta
     const handleMoveToLibrary = async (id: string) => {
-        // al añadir a la biblioteca desde la wishlist por defecto se manda al Backlog
-        await updateGame(id, { status: 'Backlog' });
+        // al añadir a la biblioteca desde la wishlist por defecto se manda al Queue
+        await updateGame(id, { status: 'Queue' });
     };
 
     const handleDeleteConfirm = async () => {

@@ -11,7 +11,7 @@ interface BadgeProps {
 const variantStyles: Record<GameStatus | 'default', string> = {
     default: 'bg-badge-bgdefault text-badge-default',
     Wishlist: 'bg-badge-bgwishlist text-badge-wishlist',
-    Backlog: 'bg-badge-bgbacklog text-badge-backlog',
+    Queue: 'bg-badge-bgqueue text-badge-queue',
     Playing: 'bg-badge-bgplaying text-badge-playing',
     Completed: 'bg-badge-bgcompleted text-badge-completed',
     Dropped: 'bg-badge-bgdropped text-badge-dropped'

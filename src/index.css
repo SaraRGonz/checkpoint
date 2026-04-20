@@ -22,9 +22,9 @@
     /* Wishlist badge */
     --color-badge-wishlist: #D8B4FE;
     --color-badge-bgwishlist: #4C1D95;
-    /* Backlog badge */
-    --color-badge-backlog: #C4B5FD;
-    --color-badge-bgbacklog: #312E81;
+    /* Queue badge */
+    --color-badge-queue: #C4B5FD;
+    --color-badge-bgqueue: #312E81;
     /* Playing badge */
     --color-badge-playing: #67E8F9;
     --color-badge-bgplaying: #164E63;
@@ -114,8 +114,8 @@ body {
     --color-badge-wishlist: #6B21A8;
     --color-badge-bgwishlist: #F3E8FF;
     
-    --color-badge-backlog: #3730A3;
-    --color-badge-bgbacklog: #E0E7FF;
+    --color-badge-queue: #3730A3;
+    --color-badge-bgqueue: #E0E7FF;
     
     --color-badge-playing: #155E75;
     --color-badge-bgplaying: #CFFAFE;

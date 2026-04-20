@@ -20,7 +20,7 @@ export function AddGamePage() {
     const [title, setTitle] = useState('');
     const [coverUrl, setCoverUrl] = useState(DEFAULT_COVER_URL);
     const [platform, setPlatform] = useState('PC');
-    const [status, setStatus] = useState<GameStatus>('Backlog');
+    const [status, setStatus] = useState<GameStatus>('Queue');
     const [releaseYear, setReleaseYear] = useState<number | ''>('');
     const [genres, setGenres] = useState<string[]>([]);
     const [error, setError] = useState<string | null>(null);

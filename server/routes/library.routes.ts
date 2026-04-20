@@ -10,7 +10,7 @@ const createGameSchema = z.object({
     body: z.object({
         title: z.string().min(1, { message: 'Title is required' }),
         platform: z.string().min(1, { message: 'Platform is required' }),
-        status: z.enum(['Wishlist', 'Backlog', 'Playing', 'Completed', 'Dropped']),
+        status: z.enum(['Wishlist', 'Queue', 'Playing', 'Completed', 'Dropped']),
         coverUrl: z.string().optional(),
         rawgId: z.number().optional(),
         genres: z.array(z.string()).optional(),
@@ -20,7 +20,7 @@ const createGameSchema = z.object({
 
 const updateGameSchema = z.object({
     body: z.object({
-        status: z.enum(['Wishlist', 'Backlog', 'Playing', 'Completed', 'Dropped']).optional(),
+        status: z.enum(['Wishlist', 'Queue', 'Playing', 'Completed', 'Dropped']).optional(),
         platform: z.string().optional(),
         rating: z.number().min(1).max(5).optional(),
         review: z.string().optional()
