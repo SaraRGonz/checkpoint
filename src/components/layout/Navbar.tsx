@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from '../../hooks/useTheme';
 import { motion } from 'framer-motion'; 
-import { LogoIcon, HomeIcon, LibraryIcon, WishlistNavIcon, SearchNavIcon, AddGameIcon, CrossIcon, MenuIcon } from '../ui/Icons';
+import { LogoIcon, HomeIcon, LibraryIcon, WishlistNavIcon, CrossIcon, MenuIcon } from '../ui/Icons';
 
 export function Navbar() {
     const { theme, toggleTheme } = useTheme();
@@ -27,13 +27,11 @@ export function Navbar() {
                 </Link>
 
                 {/* CENTRO NAVEGACIÓN (desktop visible, móvil oculto) */}
-                <div className="hidden md:flex items-center bg-gray-900/40 border border-gray-700/50 rounded-full p-1 shadow-inner relative">
+                <div className="hidden md:flex items-center bg-gray-900/40 border border-gray-700/50 rounded-full p-1 shadow-inner absolute left-1/2 -translate-x-1/2">
                     <div className="flex items-center gap-1 relative">
                         <NavItem to="/" active={isActive('/')} label="Home" icon={HomeIcon} />
                         <NavItem to="/library" active={isActive('/library')} label="Library" icon={LibraryIcon} />
                         <NavItem to="/wishlist" active={isActive('/wishlist')} label="Wishlist" icon={WishlistNavIcon} />
-                        <NavItem to="/search" active={isActive('/search')} label="Search games" icon={SearchNavIcon} />
-                        <NavItem to="/library/add" active={isActive('/library/add')} label="Add games" icon={AddGameIcon} />
                     </div>
                 </div>
 
@@ -66,8 +64,6 @@ export function Navbar() {
                     <NavItem to="/" active={isActive('/')} label="Home" icon={HomeIcon} onClick={closeMenu} />
                     <NavItem to="/library" active={isActive('/library')} label="Library" icon={LibraryIcon} onClick={closeMenu} />
                     <NavItem to="/wishlist" active={isActive('/wishlist')} label="Wishlist" icon={WishlistNavIcon} onClick={closeMenu} />
-                    <NavItem to="/search" active={isActive('/search')} label="Search" icon={SearchNavIcon} onClick={closeMenu} />
-                    <NavItem to="/library/add" active={isActive('/library/add')} label="Add Game" icon={AddGameIcon} onClick={closeMenu} />
                 </motion.div>
             )}
         </nav>
