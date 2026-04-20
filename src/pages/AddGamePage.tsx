@@ -88,7 +88,7 @@ export function AddGamePage() {
                     </Button>
                     {/* botón de cancelar */}
                     <Button onClick={() => navigate('/library')} variant="danger">
-                        <span className="flex items-center justify-center gap-2 text-text">
+                        <span className="flex items-center justify-center gap-2">
                             Cancel
                         </span>
                     </Button>
@@ -118,13 +118,13 @@ export function AddGamePage() {
                     
                     {/* input para URL debajo de la preview */}
                     <div className="mt-4 space-y-1.5">
-                        <label className="text-[10px] uppercase text-gray-600 font-bold mb-3 tracking-[0.2em]">Cover URL</label>
+                        <label className="text-[10px] uppercase text-gray-300 font-bold mb-3 tracking-[0.2em]">Cover URL</label>
                         <input 
                             type="text"
                             value={coverUrl === DEFAULT_COVER_URL ? '' : coverUrl}
                             onChange={(e) => setCoverUrl(e.target.value)}
                             placeholder="https://..."
-                            className="w-full bg-gray-950 border border-gray-700 text-gray-500 text-xs p-2 rounded outline-none focus:border-primary transition-colors placeholder:text-gray-600"
+                            className="w-full bg-gray-950 border border-gray-700 text-gray-300 text-xs p-2 rounded outline-none focus:border-primary transition-colors placeholder:text-gray-300"
                         />
                     </div>
                 </div>
@@ -134,13 +134,13 @@ export function AddGamePage() {
                     
                     {/* input de título */}
                     <div className="space-y-1.5 border-b border-gray-800 pb-6">
-                        <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest mb-1">Title</label>
+                        <label className="text-[11px] font-bold text-gray-300 uppercase tracking-widest mb-1">Title</label>
                         <input 
                             type="text"
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
                             placeholder="e.g. Baldur's Gate III"
-                            className="w-full bg-transparent text-4xl font-black tracking-tighter text-gray-100 placeholder:text-gray-800 outline-none focus:border-primary border border-transparent focus:bg-gray-950 p-2 rounded-xl transition-all"
+                            className="w-full bg-transparent text-4xl font-black tracking-tighter text-gray-100 placeholder:text-gray-500 outline-none focus:border-primary border border-transparent focus:bg-gray-950 p-2 rounded-xl transition-all"
                         />
                     </div>
 
@@ -148,7 +148,7 @@ export function AddGamePage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {/* platform */}
                         <div className="flex flex-col gap-1.5 w-full">
-                            <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Platform</label>
+                            <label className="text-[10px] font-bold text-gray-300 uppercase tracking-widest">Platform</label>
                             <ActionMenu value={platform} onSelect={setPlatform}>
                                 <ActionMenu.Button>{platform}</ActionMenu.Button>
                                 <ActionMenu.Overlay>
@@ -160,7 +160,7 @@ export function AddGamePage() {
                         </div>
                         {/* status */}
                         <div className="flex flex-col gap-1.5 w-full">
-                            <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Status</label>
+                            <label className="text-[10px] font-bold text-gray-300 uppercase tracking-widest">Status</label>
                             <ActionMenu value={status} onSelect={(val) => setStatus(val as GameStatus)}>
                                 <ActionMenu.Button>{status}</ActionMenu.Button>
                                 <ActionMenu.Overlay>
@@ -174,19 +174,19 @@ export function AddGamePage() {
 
                     {/* AÑO DE LANZAMIENTO */}
                     <div className="flex flex-col gap-1.5 w-full pt-4 border-t border-gray-800">
-                        <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Release Year</label>
+                        <label className="text-[10px] font-bold text-gray-300 uppercase tracking-widest">Release Year</label>
                         <input 
                             type="number"
                             value={releaseYear}
                             onChange={(e) => setReleaseYear(e.target.value === '' ? '' : parseInt(e.target.value))}
                             placeholder="e.g. 2022"
-                            className="bg-gray-950 border border-gray-700 text-white text-sm p-3 rounded-lg w-full outline-none focus:border-primary transition-all placeholder:text-gray-600"
+                            className="bg-gray-950 border border-gray-700 text-text text-sm p-3 rounded-lg w-full outline-none focus:border-primary transition-all placeholder:text-gray-300"
                         />
                     </div>
 
                     {/* GÉNEROS */}
                     <div className="flex flex-col gap-1.5 w-full pt-4 border-t border-gray-800">
-                        <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Genres</label>
+                        <label className="text-[10px] font-bold text-gray-300 uppercase tracking-widest">Genres</label>
                         <TagInput 
                             tags={genres} 
                             onChange={setGenres} 

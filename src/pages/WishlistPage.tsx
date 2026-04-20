@@ -124,7 +124,7 @@ export function WishlistPage() {
 
                 {/* order by */}
                 <div className="flex flex-col gap-1.5 w-full">
-                    <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Order by</label>
+                    <label className="text-[10px] font-bold text-gray-300 uppercase tracking-widest">Order by</label>
                     <ActionMenu value={sortOption} onSelect={(val) => setSortOption(val as SortOption)}>
                         <ActionMenu.Button>{sortLabels[sortOption]}</ActionMenu.Button>
                         <ActionMenu.Overlay>
@@ -142,7 +142,7 @@ export function WishlistPage() {
                 <div className="flex justify-between items-center">
                     <h2 className="text-xl font-black text-primary uppercase tracking-tighter">Filters</h2>
                     {hasActiveFilters && (
-                        <button onClick={clearFilters} className="text-[10px] font-bold text-gray-500 hover:text-white uppercase transition-colors">
+                        <button onClick={clearFilters} className="text-[10px] font-bold text-gray-300 hover:text-white uppercase transition-colors">
                             Reset
                         </button>
                     )}
@@ -152,7 +152,7 @@ export function WishlistPage() {
                 <div className="flex flex-col gap-4">
                     {/* genre */}
                     <div className="flex flex-col gap-1.5 w-full">
-                        <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Genre</label>
+                        <label className="text-[10px] font-bold text-gray-300 uppercase tracking-wider">Genre</label>
                         <ActionMenu value={genreFilter} onSelect={setGenreFilter}>
                             <ActionMenu.Button>
                                 {genreFilter === 'all' ? 'All' : genreFilter}
@@ -160,7 +160,7 @@ export function WishlistPage() {
                             <ActionMenu.Overlay>
                                 <ActionMenu.Item value="all">All</ActionMenu.Item>
                                 {availableGenres.length === 0 ? (
-                                    <div className="px-4 py-3 text-xs text-gray-500 italic text-center">Genres not found</div>
+                                    <div className="px-4 py-3 text-xs text-gray-300 italic text-center">Genres not found</div>
                                 ) : (
                                     availableGenres.map(g => (
                                         <ActionMenu.Item key={g} value={g}>{g}</ActionMenu.Item>
@@ -172,7 +172,7 @@ export function WishlistPage() {
 
                     {/* platform */}
                     <div className="flex flex-col gap-1.5 w-full">
-                        <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Platform</label>
+                        <label className="text-[10px] font-bold text-gray-300 uppercase tracking-wider">Platform</label>
                         <ActionMenu value={platformFilter} onSelect={setPlatformFilter} position="top">
                             <ActionMenu.Button>
                                 {platformFilter === 'all' ? 'All' : platformFilter}

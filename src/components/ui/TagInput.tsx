@@ -39,7 +39,7 @@ export function TagInput({ tags, onChange, placeholder = "Add genre and press en
                         <button 
                             type="button" // Añadido type="button" por seguridad en formularios
                             onClick={() => removeTag(tag)}
-                            className="absolute -top-1 -right-1 bg-danger text-white rounded-full w-3.5 h-3.5 text-[8px] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                            className="absolute -top-1 -right-1 bg-danger text-text rounded-full w-3.5 h-3.5 text-[8px] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
                         >✕</button>
                     </div>
                 ))}
@@ -51,7 +51,7 @@ export function TagInput({ tags, onChange, placeholder = "Add genre and press en
                 onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addTag())}
                 onBlur={addTag}
                 placeholder={placeholder}
-                className="bg-gray-950 border border-gray-700 text-text text-xs placeholder:text-gray-600 p-2 rounded w-full outline-none focus:border-primary transition-colors"
+                className="bg-gray-950 border border-gray-700 text-text text-xs placeholder:text-gray-300 p-2 rounded w-full outline-none focus:border-primary transition-colors"
             />
         </div>
     );

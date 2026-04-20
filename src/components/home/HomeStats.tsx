@@ -24,7 +24,7 @@ export function HomeStats() {
         <div className="h-full flex flex-col justify-center gap-8">
             <div className="text-center border-b border-gray-800 pb-6">
                 <span className="text-5xl font-black text-text">{total}</span>
-                <p className="text-[10px] uppercase tracking-[0.3em] text-gray-500 mt-2">Total Library</p>
+                <p className="text-[10px] uppercase tracking-[0.3em] text-text">Total Library</p>
             </div>
 
             <div className="space-y-6">
@@ -34,7 +34,7 @@ export function HomeStats() {
                     return (
                         <div key={status} className="space-y-2">
                             {/* encabezado numérico y textual del progreso */}
-                            <div className="flex justify-between text-[10px] uppercase font-bold tracking-widest text-gray-400">
+                            <div className="flex justify-between text-[10px] uppercase font-bold tracking-widest text-text">
                                 <span>{status}</span>
                                 <span>{percentage}%</span>
                             </div>

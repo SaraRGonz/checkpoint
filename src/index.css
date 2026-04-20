@@ -3,75 +3,77 @@
 @theme {
 
     /* ---- THEME COLORS ---- */
-    --color-text: #ffffff;
-    --color-background: #0B1026;
-    --color-primary: #00D1FF;
-    --color-secondary: #00FFA3;
-    --color-tertiary: #A259FF;
-    --color-accent: #FFD166;
+    --color-text: #F8FAFC;
+    --color-background: #090B10; /* Obsidian */
+    --color-primary: #0EA5E9; /* Sky Blue  */
+    --color-secondary: #10B981; /* Emerald green */
+    --color-tertiary: #8B5CF6; /* violet */
+    --color-accent: #F59E0B; /* Amber gold */
     
-    --color-danger: #d81857;
-    --color-gray: #dfdfdf;
+    --color-danger: #EF4444; /* Rose red */
+    --color-gray: #64748B;
 
 
     /* ---- BADGE COLORS ---- */
+    /* Fondos oscuros saturados con texto luminoso */
     /* Default badge */
-    --color-badge-default: #545454;
-    --color-badge-bgdefault: var(--color-gray);
+    --color-badge-default: #CBD5E1;
+    --color-badge-bgdefault: #334155;
     /* Wishlist badge */
-    --color-badge-wishlist: #6d044c;
-    --color-badge-bgwishlist: #ff82d8;
+    --color-badge-wishlist: #D8B4FE;
+    --color-badge-bgwishlist: #4C1D95;
     /* Backlog badge */
-    --color-badge-backlog: #330b74;
-    --color-badge-bgbacklog: var(--color-tertiary);
+    --color-badge-backlog: #C4B5FD;
+    --color-badge-bgbacklog: #312E81;
     /* Playing badge */
-    --color-badge-playing: #054c5b;
-    --color-badge-bgplaying: var(--color-primary);
+    --color-badge-playing: #67E8F9;
+    --color-badge-bgplaying: #164E63;
     /* Completed badge */
-    --color-badge-completed: #244004;
-    --color-badge-bgcompleted: var(--color-secondary);
+    --color-badge-completed: #86EFAC;
+    --color-badge-bgcompleted: #14532D;
     /* Dropped badge */
-    --color-badge-dropped: #570822;
-    --color-badge-bgdropped: var(--color-danger);
+    --color-badge-dropped: #FCA5A5;
+    --color-badge-bgdropped: #7F1D1D;
 
 
     /* ---- BUTTON COLORS ---- */
     /* Primary color */
-    --color-primarybutton-text: var(--color-text);
-    --color-primarybutton-bg: var(--color-primary);
-    --color-primarybutton-bghover: #6ae4ff;
-    --color-primarybutton-bgactive: #0e9dbd;
+    --color-primarybutton-text: #FFFFFF;
+    --color-primarybutton-bg: #0284C7;       
+    --color-primarybutton-bghover: #0369A1;  
+    --color-primarybutton-bgactive: #075985;
     /* Secondary color */
-    --color-secondarybutton-text: var(--color-text);
-    --color-secondarybutton-bg: var(--color-secondary);
-    --color-secondarybutton-bghover: #59ffc3;
-    --color-secondarybutton-bgactive: #05bf7c;
+    --color-secondarybutton-text: #FFFFFF;
+    --color-secondarybutton-bg: #047857;       
+    --color-secondarybutton-bghover: #065F46;  
+    --color-secondarybutton-bgactive: #064E3B;
     /* Danger color */
-    --color-dangerbutton-text: var(--color-text);
-    --color-dangerbutton-bg: var(--color-danger);
-    --color-dangerbutton-bghover: #ff5089;
-    --color-dangerbutton-bgactive: #820d34;
+    --color-dangerbutton-text: #FFFFFF;
+    --color-dangerbutton-bg: #B91C1C;       
+    --color-dangerbutton-bghover: #DC2626;  
+    --color-dangerbutton-bgactive: #991B1B;
 
 
     /* ---- STAR RATING COLORS ---- */
     --color-filledstar: var(--color-accent);
-    --color-emptystar: var(--color-badge-bgdefault);
+    --color-emptystar: #334155;
 
 
     /* ---- SEARCH INPUT COLORS ---- */
     /* Icon color */
-    --color-searchinput-icon: var(--color-text);
+    --color-searchinput-icon: #ffffff;
     /* Input colors */
-    --color-searchinput-bg: var(--color-tertiary);
-    --color-searchinput-placeholder: var(--color-text);
+    --color-searchinput-bg: #101828; 
+    --color-searchinput-placeholder: #ffffff;
     /* Focus colors */
-    --color-searchinput-focusborder: var(--color-gray);
-    --color-searchinput-focusplaceholder: var(--color-gray);
+    --color-searchinput-focusborder: var(--color-primary);
+    --color-searchinput-focusplaceholder: #ffffff;
 
     /* ---- ERROR MESSAGE ----*/
-    --color-errorbg: #fef2f2;
-    --color-errortext: var(--color-danger);
+    --color-errorbg: #450A0A; 
+    --color-errortext: #FCA5A5;
     --color-erroraccent: var(--color-dangerbutton-bgactive);
+
 
 }
 
@@ -80,11 +82,11 @@ body {
 }
 
 .light {
-    /* Fondo y texto principales */
+    /* Fondo y texto principal */
     --color-background: #F3F4F6;
     --color-text: #111827;
 
-    /* Invertir blanco y negro (para clases fijas como text-white o bg-black) */
+    /* Invertir blanco y negro */
     --color-white: #111827; 
     --color-black: #ffffff; 
 
@@ -103,15 +105,40 @@ body {
 
     /* Ajustes de componentes para Light Mode */
     --color-gray: #9ca3af; 
-    --color-badge-default: #ffffff;
-    --color-badge-bgdefault: #6b7280;
+    
+    /* Reajuste de badges para modo claro */
+    /* fondos suaves, texto oscuro */
+    --color-badge-default: #374151;
+    --color-badge-bgdefault: #E5E7EB;
+    
+    --color-badge-wishlist: #6B21A8;
+    --color-badge-bgwishlist: #F3E8FF;
+    
+    --color-badge-backlog: #3730A3;
+    --color-badge-bgbacklog: #E0E7FF;
+    
+    --color-badge-playing: #155E75;
+    --color-badge-bgplaying: #CFFAFE;
+    
+    --color-badge-completed: #166534;
+    --color-badge-bgcompleted: #DCFCE7;
+    
+    --color-badge-dropped: #9F1239;
+    --color-badge-bgdropped: #FFE4E6;
 
     /* Texto blanco en dangerbutton */
     --color-dangerbutton-text: #ffffff; 
 
-    /* Suavizado del buscador */
-    --color-searchinput-bg: var(--color-gray-800);
-    --color-searchinput-placeholder: var(--color-gray-500);
+    /* Suavizado del buscador en modo claro */
+    --color-searchinput-bg: #ffffff;         
+    --color-searchinput-icon: #4B5563;       
+    --color-searchinput-placeholder: #3d444e;
+    --color-searchinput-focusborder: var(--color-primary);
+    --color-searchinput-focusplaceholder: #111827;
+    
+    /* Suavizado de errores en modo claro */
+    --color-errorbg: #FEF2F2;
+    --color-errortext: #B91C1C;
 }
 
 /* ---- CUSTOM SCROLLBAR ---- */
@@ -127,14 +154,14 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #4b5563; 
+    background-color: #475569; 
     border-radius: 10px; 
 }
 
 /* Para Firefox */
 * {
     scrollbar-width: thin;
-    scrollbar-color: #4b5563 transparent;
+    scrollbar-color: #475569 transparent;
 }
 
 /* ---- NUMBER INPUT SPIN-BUTTONS ---- */

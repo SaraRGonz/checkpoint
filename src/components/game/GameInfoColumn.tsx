@@ -60,7 +60,7 @@ export function GameInfoColumn({ draft, isEditing, updateDraftField }: GameInfoC
 
             {/* RATING */}
             <div className="pt-2 flex justify-between items-center">
-                <label className="text-xs font-bold text-gray-500 uppercase tracking-widest mt-1">Rating:</label>
+                <label className="text-[11px] font-bold text-gray-300 uppercase tracking-widest mt-1">Rating:</label>
                 <StarRating 
                     rating={draft.rating || 0} 
                     onChange={(r) => updateDraftField('rating', r)}

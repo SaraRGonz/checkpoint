@@ -68,7 +68,7 @@ export function GameCard({
                 {showDetails && (
                     <div className="flex justify-between items-center mt-auto pt-3 border-t border-gray-800/50">
                         {/* plataforma */}
-                        <span className="text-xs font-bold text-gray-500 uppercase tracking-widest truncate max-w-[55%]">
+                        <span className="text-xs font-bold text-gray-300 uppercase tracking-widest truncate max-w-[55%]">
                             {game.platform}
                         </span>
                         

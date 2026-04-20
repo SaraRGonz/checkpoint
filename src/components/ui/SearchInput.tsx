@@ -17,7 +17,7 @@ export function SearchInput({ value, onChange, placeholder = 'Search game...' }:
             {/* input donde escribir la búsqueda*/}
             <input
                 type="text"
-                className="block w-full pl-10 pr-3 py-2 border rounded-md leading-5 bg-searchinput-bg placeholder-searchinput-placeholder focus:outline-none focus:placeholder-searchinput-focusplaceholder focus:border-searchinput-focusborder sm:text-sm transition duration-150 ease-in-out"
+                className="block w-full pl-10 pr-3 py-2 border border-gray-700 rounded-md leading-5 bg-searchinput-bg placeholder-searchinput-placeholder focus:outline-none focus:placeholder-searchinput-focusplaceholder focus:border-searchinput-focusborder sm:text-sm transition duration-150 ease-in-out"
                 placeholder={placeholder}
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
