@@ -5,7 +5,7 @@ export interface Game {
     rawgId?: number;
     title: string;
     coverUrl: string;
-    platform: string; 
+    platform?: string; 
     status: GameStatus; 
     rating?: number;
     review?: string;

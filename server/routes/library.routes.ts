@@ -9,7 +9,7 @@ const router = Router();
 const createGameSchema = z.object({
     body: z.object({
         title: z.string().min(1, { message: 'Title is required' }),
-        platform: z.string().min(1, { message: 'Platform is required' }),
+        platform: z.string().optional(),
         status: z.enum(['Wishlist', 'Queue', 'Playing', 'Completed', 'Dropped']),
         coverUrl: z.string().optional(),
         rawgId: z.number().optional(),

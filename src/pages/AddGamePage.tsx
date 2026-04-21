@@ -19,7 +19,7 @@ export function AddGamePage() {
     // estado local para todos los campos 
     const [title, setTitle] = useState('');
     const [coverUrl, setCoverUrl] = useState(DEFAULT_COVER_URL);
-    const [platform, setPlatform] = useState('PC');
+    const [platform, setPlatform] = useState('');
     const [status, setStatus] = useState<GameStatus>('Queue');
     const [releaseYear, setReleaseYear] = useState<number | ''>('');
     const [genres, setGenres] = useState<string[]>([]);
@@ -55,7 +55,7 @@ export function AddGamePage() {
             const newGameId = await addGame({
             title,
             coverUrl: coverUrl.trim() === '' ? DEFAULT_COVER_URL : coverUrl,
-            platform,
+            platform: platform === '' ? undefined : platform,
             status,
             releaseYear: releaseYear === '' ? undefined : releaseYear, // evita enviar null
             genres,
@@ -150,7 +150,7 @@ export function AddGamePage() {
                         <div className="flex flex-col gap-1.5 w-full">
                             <label className="text-[10px] font-bold text-gray-300 uppercase tracking-widest">Platform</label>
                             <ActionMenu value={platform} onSelect={setPlatform}>
-                                <ActionMenu.Button>{platform}</ActionMenu.Button>
+                                <ActionMenu.Button>{platform || 'Select Platform'}</ActionMenu.Button>
                                 <ActionMenu.Overlay>
                                     <ActionMenu.Search />
                                     {PLATFORM_LIST.map(p => (
