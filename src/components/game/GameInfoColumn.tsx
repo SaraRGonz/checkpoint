@@ -4,6 +4,7 @@ import { TagInput } from '../ui/TagInput';
 import { ActionMenu } from '../ui/ActionMenu/ActionMenu';
 import { PLATFORM_LIST, STATUS_LIST } from '../../utils/constants';
 import type { Game, GameStatus } from '../../types/game';
+import { GameMetadataSection } from './GameMetadataSection'; 
 
 interface GameInfoColumnProps {
     draft: Game;
@@ -70,6 +71,14 @@ export function GameInfoColumn({ draft, isEditing, updateDraftField }: GameInfoC
                     disabled={!isEditing}
                 />
             </div>
+            
+            {/* METADATA */}
+            <GameMetadataSection 
+                addedAt={draft.addedAt} 
+                updatedAt={draft.updatedAt} 
+                rawgId={draft.rawgId} 
+            />
+
         </div>
     );
 }

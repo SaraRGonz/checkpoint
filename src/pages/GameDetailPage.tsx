@@ -6,7 +6,6 @@ import { GameDetailHeader } from '../components/game/GameDetailHeader';
 import { GameCoverColumn } from '../components/game/GameCoverColumn';
 import { GameInfoColumn } from '../components/game/GameInfoColumn';
 import { GameNotes } from '../components/game/GameNotes';
-import { GameDetailFooter } from '../components/game/GameDetailFooter';
 import { Spinner } from '../components/ui/Spinner';
 import { Modal, type ModalButton } from '../components/ui/Modal';
 import placeholderImg from '../assets/placeholder.jpg';
@@ -88,9 +87,6 @@ export function GameDetailPage() {
                     />
                 </div>
             </div>
-            
-            {/* pie de página con metadatos de fechas y rawgid */}
-            <GameDetailFooter addedAt={game.addedAt} updatedAt={game.updatedAt} rawgId={game.rawgId} />
 
             {/* modal para borrar juego */}
             <Modal isOpen={isDeleteModalOpen} onClose={() => setIsDeleteModalOpen(false)} title="Delete Game" footerButtons={deleteModalButtons}>
