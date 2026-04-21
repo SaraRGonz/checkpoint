@@ -152,6 +152,7 @@ export function AddGamePage() {
                             <ActionMenu value={platform} onSelect={setPlatform}>
                                 <ActionMenu.Button>{platform}</ActionMenu.Button>
                                 <ActionMenu.Overlay>
+                                    <ActionMenu.Search />
                                     {PLATFORM_LIST.map(p => (
                                         <ActionMenu.Item key={p} value={p}>{p}</ActionMenu.Item>
                                     ))}

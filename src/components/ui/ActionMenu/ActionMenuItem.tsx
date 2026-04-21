@@ -11,8 +11,11 @@ interface Props {
 // representa cada una de las opciones clickables de la lista dentro del menú
 export function ActionMenuItem({ value, children, selected }: Props) {
     // contexto para saber cuál es el valor global actual y cómo cerrarlo al terminar
-    const { selectedValue, onSelect, setIsOpen } = useActionMenu();
-    
+    const { selectedValue, onSelect, setIsOpen, searchQuery } = useActionMenu();
+    const matches = children?.toString().toLowerCase().includes(searchQuery.toLowerCase());
+
+    if (!matches && searchQuery !== '') return null;
+
     // comprueba si esta opción concreta es la seleccionada para destacarla.
     const isSelected = selected || selectedValue === value;
 

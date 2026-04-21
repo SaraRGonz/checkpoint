@@ -20,6 +20,9 @@ export function GameInfoColumn({ draft, isEditing, updateDraftField }: GameInfoC
                     <ActionMenu value={draft.platform} onSelect={(val) => updateDraftField('platform', val)}>
                         <ActionMenu.Button>{draft.platform}</ActionMenu.Button>
                         <ActionMenu.Overlay>
+
+                            <ActionMenu.Search />
+                            
                             {PLATFORM_LIST.map(p => (
                                 <ActionMenu.Item key={p} value={p}>{p}</ActionMenu.Item>
                             ))}

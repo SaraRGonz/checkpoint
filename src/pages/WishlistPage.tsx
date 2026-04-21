@@ -158,6 +158,9 @@ export function WishlistPage() {
                                 {genreFilter === 'all' ? 'All' : genreFilter}
                             </ActionMenu.Button>
                             <ActionMenu.Overlay>
+
+                                <ActionMenu.Search />
+
                                 <ActionMenu.Item value="all">All</ActionMenu.Item>
                                 {availableGenres.length === 0 ? (
                                     <div className="px-4 py-3 text-xs text-gray-300 italic text-center">Genres not found</div>
@@ -178,6 +181,9 @@ export function WishlistPage() {
                                 {platformFilter === 'all' ? 'All' : platformFilter}
                             </ActionMenu.Button>
                             <ActionMenu.Overlay>
+
+                                <ActionMenu.Search />
+                                
                                 <ActionMenu.Item value="all">All</ActionMenu.Item>
                                 {PLATFORM_LIST.map(p => (
                                     <ActionMenu.Item key={p} value={p}>{p}</ActionMenu.Item>

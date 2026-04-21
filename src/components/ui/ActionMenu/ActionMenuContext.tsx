@@ -8,6 +8,8 @@ export interface ActionMenuContextProps {
     onSelect?: (value: string) => void;
     selectedValue?: string;
     position?: 'top' | 'bottom'; // hacia dónde se despliega el menú
+    searchQuery: string;
+    setSearchQuery: (query: string) => void;
 }
 
 // crea el contexto

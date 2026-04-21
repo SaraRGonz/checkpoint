@@ -4,6 +4,7 @@ import { ActionMenuContext } from './ActionMenuContext';
 import { ActionMenuButton } from './ActionMenuButton';
 import { ActionMenuOverlay } from './ActionMenuOverlay';
 import { ActionMenuItem } from './ActionMenuItem';
+import { ActionMenuSearch } from './ActionMenuSearch';
 
 interface ActionMenuProps {
     children: ReactNode;
@@ -16,6 +17,7 @@ interface ActionMenuProps {
 export function ActionMenu({ children, onSelect, value, position = 'bottom' }: ActionMenuProps) {
     // estado local para saber si el menú flotante está desplegado o escondido
     const [isOpen, setIsOpen] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
     // referencia al contenedor HTML para poder detectar cuándo se hace clic dentro o fuera de él
     const menuRef = useRef<HTMLDivElement>(null);
 
@@ -34,9 +36,16 @@ export function ActionMenu({ children, onSelect, value, position = 'bottom' }: A
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
+    useEffect(() => {
+        if (!isOpen) setSearchQuery('');
+    }, [isOpen]);
+
     return (
         // usa el provider para inyectar los datos y compartirlos con todos los hijos del menú
-        <ActionMenuContext.Provider value={{ isOpen, setIsOpen, onSelect, selectedValue: value, position }}>
+        <ActionMenuContext.Provider value={{ 
+            isOpen, setIsOpen, onSelect, selectedValue: value, position,
+            searchQuery, setSearchQuery // Pasar al provider
+        }}>
             <div className="relative inline-block text-left w-full" ref={menuRef}>
                 {children}
             </div>
@@ -48,3 +57,4 @@ export function ActionMenu({ children, onSelect, value, position = 'bottom' }: A
 ActionMenu.Button = ActionMenuButton;
 ActionMenu.Overlay = ActionMenuOverlay;
 ActionMenu.Item = ActionMenuItem;
+ActionMenu.Search = ActionMenuSearch;
