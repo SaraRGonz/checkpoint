@@ -30,6 +30,18 @@ export function useFilters(initialGames: Game[]) {
         return Array.from(genres).sort(); 
     }, [initialGames]);
 
+    // extrae los géneros únicos de todos los juegos de la biblioteca que tenga el usuario
+    const availablePlatforms = useMemo(() => {
+        const platforms = new Set<string>();
+        initialGames.forEach(game => {
+            // solo añade si existe y no es un string vacío
+            if (game.platform && game.platform.trim() !== '') {
+                platforms.add(game.platform);
+            }
+        });
+        return Array.from(platforms).sort(); 
+    }, [initialGames]);
+
     // filtra y después ordena los juegos
     const filteredGames = useMemo(() => {
         let result = initialGames;
@@ -45,7 +57,12 @@ export function useFilters(initialGames: Game[]) {
             );
         }
         if (platformFilter !== 'all') {
-            result = result.filter(game => game.platform === platformFilter);
+            if (platformFilter === 'Not specified') {
+                // filtra los que no tienen plataforma asignada o está vacía
+                result = result.filter(game => !game.platform || game.platform.trim() === '');
+            } else {
+                result = result.filter(game => game.platform === platformFilter);
+            }
         }
 
         if (ratingFilter !== 'all') {
@@ -93,6 +110,7 @@ export function useFilters(initialGames: Game[]) {
         ratingFilter, setRatingFilter,
         filteredGames,
         availableGenres,
+        availablePlatforms,
         clearFilters,
         hasActiveFilters
     };

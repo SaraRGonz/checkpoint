@@ -7,7 +7,7 @@ import { SearchInput } from '../components/ui/SearchInput';
 import { EmptyState } from '../components/ui/EmptyState';
 import { Button } from '../components/ui/Button';
 import { ActionMenu } from '../components/ui/ActionMenu/ActionMenu';
-import { STATUS_LIST, PLATFORM_LIST } from '../utils/constants';
+import { STATUS_LIST } from '../utils/constants';
 import { SearchIcon, PlusIcon } from '../components/ui/Icons';
 import { Spinner } from '../components/ui/Spinner';
 
@@ -21,6 +21,7 @@ export function LibraryPage() {
     const {
         filteredGames,
         availableGenres,
+        availablePlatforms,
         searchQuery, setSearchQuery,
         sortOption, setSortOption,
         statusFilter, setStatusFilter,
@@ -165,9 +166,15 @@ export function LibraryPage() {
                                 <ActionMenu.Search />
                                 
                                 <ActionMenu.Item value="all">All</ActionMenu.Item>
-                                {PLATFORM_LIST.map(p => (
-                                    <ActionMenu.Item key={p} value={p}>{p}</ActionMenu.Item>
-                                ))}
+                                <ActionMenu.Item value="Not specified">Not specified</ActionMenu.Item> {/* <-- Opción para sin asignar */}
+                                
+                                {availablePlatforms.length === 0 ? (
+                                    <div className="px-4 py-3 text-xs text-gray-300 italic text-center">No platforms found</div>
+                                ) : (
+                                    availablePlatforms.map(p => (
+                                        <ActionMenu.Item key={p} value={p}>{p}</ActionMenu.Item>
+                                    ))
+                                )}
                             </ActionMenu.Overlay>
                         </ActionMenu>
                     </div>
