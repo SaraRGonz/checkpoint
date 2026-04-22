@@ -4,6 +4,9 @@ import * as rawgService from '../services/rawg.service';
 export const searchGames = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const query = req.query.q as string; // extrae ?q=zelda de la URL
+        const platform = req.query.platform as string;
+        const genre = req.query.genre as string;
+        const year = req.query.year as string;
         
         // manejo de error si falta el parámetro
         if (!query) {
@@ -14,7 +17,8 @@ export const searchGames = async (req: Request, res: Response, next: NextFunctio
             return next(err);
         }
 
-        const results = await rawgService.searchGames(query);
+        // pasa todos los parámetros opcionales al servicio
+        const results = await rawgService.searchGames(query, platform, genre, year);
         res.status(200).json({ results, count: results.length });
         
     } catch (error: any) {

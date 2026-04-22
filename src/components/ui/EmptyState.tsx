@@ -10,6 +10,7 @@ interface EmptyStateProps {
     onSecondaryClick?: () => void;
     secondaryClickText?: string;
     icon?: ReactNode;
+    variant?: 'dashed' | 'clean';
 }
 
 export function EmptyState({ 
@@ -19,10 +20,16 @@ export function EmptyState({
     clickText = 'Search Games',
     onSecondaryClick,
     secondaryClickText = 'Add Manual Game',
-    icon
+    icon,
+    variant = 'dashed'
 }: EmptyStateProps) {
+
+    const borderClasses = variant === 'dashed' 
+        ? 'border-2 border-dashed border-secondary bg-background' 
+        : 'border border-gray-800 bg-gray-900/40 shadow-xl';
+
     return (
-        <div className="flex flex-col items-center justify-center p-12 text-center bg-background rounded-lg border-2 border-dashed border-secondary">
+        <div className={`flex flex-col items-center justify-center p-12 text-center rounded-2xl transition-all ${borderClasses}`}>
             {/* icono svg personalizado o el de un fantasma por defecto*/}
             <div className="mb-6">
                 {icon ? (

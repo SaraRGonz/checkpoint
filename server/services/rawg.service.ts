@@ -3,9 +3,17 @@ import { env } from '../config/env'; // <-- Importamos la configuración
 const API_KEY = env.RAWG_API_KEY;
 const BASE_URL = 'https://api.rawg.io/api';
 
-export const searchGames = async (query: string) => {
+export const searchGames = async (query: string, platform?: string, genre?: string, year?: string) => {
     // busca juegos usando la API Key y limitando a 12 resultados por página
-    const response = await fetch(`${BASE_URL}/games?key=${API_KEY}&search=${query}&page_size=12`);
+    let url = `${BASE_URL}/games?key=${API_KEY}&search=${encodeURIComponent(query)}&page_size=30`;
+    
+    if (platform) url += `&platforms=${platform}`;
+    
+    if (genre) url += `&genres=${genre}`;
+    
+    if (year) url += `&dates=${year}-01-01,${year}-12-31`;
+
+    const response = await fetch(url);
     
     if (!response.ok) throw new Error('Error fetching data from RAWG API');
     
