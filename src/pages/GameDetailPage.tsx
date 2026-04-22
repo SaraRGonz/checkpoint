@@ -93,6 +93,7 @@ export function GameDetailPage() {
                 onSave={saveChanges} 
                 onDiscard={discardChanges} 
                 onDelete={() => setIsDeleteModalOpen(true)} 
+                onBack={() => navigate(-1)}
             />
 
             {/* grid principal con columna de portada info y notas */}

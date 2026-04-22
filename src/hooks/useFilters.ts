@@ -1,27 +1,51 @@
-import { useState, useMemo, useCallback } from 'react';
+import { useMemo, useCallback } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import type { Game } from '../types/game';
 
 export type SortOption = 'title-asc' | 'title-desc' | 'added-desc' | 'updated-desc';
 
 export function useFilters(initialGames: Game[]) {
-    
-    // estados para los controles 
-    const [searchQuery, setSearchQuery] = useState<string>('');
-    const [sortOption, setSortOption] = useState<SortOption>('added-desc');
-    
-    // filtros de los desplegables
-    const [statusFilter, setStatusFilter] = useState<string>('all');
-    const [genreFilter, setGenreFilter] = useState<string>('all');
-    const [platformFilter, setPlatformFilter] = useState<string>('all');
-    const [ratingFilter, setRatingFilter] = useState<string>('all');
+    const [searchParams, setSearchParams] = useSearchParams();
 
-    // extrae los géneros únicos de todos los juegos de la biblioteca que tenga el usuario
+    // helpers para leer y escribir parámetros de forma limpia
+    const getParam = (key: string, defaultVal: string) => searchParams.get(key) || defaultVal;
+    
+    const updateParam = (key: string, value: string, defaultVal: string) => {
+        setSearchParams(prev => {
+            if (value === defaultVal || value === '') {
+                prev.delete(key);
+            } else {
+                prev.set(key, value);
+            }
+            return prev;
+        }, { replace: true }); // replace: true evita crear un historial infinito al clickar filtros
+    };
+
+    // estados derivados de la URL
+    const searchQuery = getParam('q', '');
+    const setSearchQuery = (val: string) => updateParam('q', val, '');
+
+    const sortOption = getParam('sort', 'added-desc') as SortOption;
+    const setSortOption = (val: SortOption) => updateParam('sort', val, 'added-desc');
+
+    const statusFilter = getParam('status', 'all');
+    const setStatusFilter = (val: string) => updateParam('status', val, 'all');
+
+    const genreFilter = getParam('genre', 'all');
+    const setGenreFilter = (val: string) => updateParam('genre', val, 'all');
+
+    const platformFilter = getParam('platform', 'all');
+    const setPlatformFilter = (val: string) => updateParam('platform', val, 'all');
+
+    const ratingFilter = getParam('rating', 'all');
+    const setRatingFilter = (val: string) => updateParam('rating', val, 'all');
+
+    // extrae los géneros únicos
     const availableGenres = useMemo(() => {
         const genres = new Set<string>();
         initialGames.forEach(game => {
             if (game.genres && game.genres.length > 0) {
                 game.genres.forEach(g => {
-                    // si hay datos antiguos los unifica en el ActionMenu
                     const formatted = g.charAt(0).toUpperCase() + g.slice(1).toLowerCase();
                     genres.add(formatted);
                 });
@@ -30,11 +54,10 @@ export function useFilters(initialGames: Game[]) {
         return Array.from(genres).sort(); 
     }, [initialGames]);
 
-    // extrae los géneros únicos de todos los juegos de la biblioteca que tenga el usuario
+    // extrae las plataformas únicas
     const availablePlatforms = useMemo(() => {
         const platforms = new Set<string>();
         initialGames.forEach(game => {
-            // solo añade si existe y no es un string vacío
             if (game.platform && game.platform.trim() !== '') {
                 platforms.add(game.platform);
             }
@@ -58,13 +81,11 @@ export function useFilters(initialGames: Game[]) {
         }
         if (platformFilter !== 'all') {
             if (platformFilter === 'Not specified') {
-                // filtra los que no tienen plataforma asignada o está vacía
                 result = result.filter(game => !game.platform || game.platform.trim() === '');
             } else {
                 result = result.filter(game => game.platform === platformFilter);
             }
         }
-
         if (ratingFilter !== 'all') {
             result = result.filter(game => game.rating === parseInt(ratingFilter, 10));
         }
@@ -80,7 +101,6 @@ export function useFilters(initialGames: Game[]) {
                     return new Date(b.updatedAt || 0).getTime() - new Date(a.updatedAt || 0).getTime();
                 case 'added-desc':
                 default:
-                    // si no hay fecha usa 0 para que no falle el parseo
                     return new Date(b.addedAt || 0).getTime() - new Date(a.addedAt || 0).getTime();
             }
         });
@@ -88,17 +108,11 @@ export function useFilters(initialGames: Game[]) {
         return result;
     }, [initialGames, searchQuery, statusFilter, genreFilter, platformFilter, ratingFilter, sortOption]);
 
-    // función para resetear todo de golpe
+    // función para limpiar la URL entera
     const clearFilters = useCallback(() => {
-        setSearchQuery('');
-        setSortOption('added-desc');
-        setStatusFilter('all');
-        setGenreFilter('all');
-        setPlatformFilter('all');
-        setRatingFilter('all');
-    }, []);
+        setSearchParams(new URLSearchParams(), { replace: true });
+    }, [setSearchParams]);
 
-    // calcula si hay algún filtro activo para poner el botón de limpiar
     const hasActiveFilters = searchQuery !== '' || sortOption !== 'added-desc' || statusFilter !== 'all' || genreFilter !== 'all' || platformFilter !== 'all' || ratingFilter !== 'all';
 
     return {
