@@ -10,7 +10,7 @@ import { Button } from '../components/ui/Button';
 import { ActionMenu } from '../components/ui/ActionMenu/ActionMenu';
 import { RAWG_PLATFORMS, RAWG_GENRES } from '../utils/rawgConstants';
 import type { Game, GameStatus } from '../types/game';
-import { PlusIcon, HeartIcon, SearchIcon } from '../components/ui/Icons';
+import { PlusIcon, HeartIcon, SearchIcon, ArrowLeftIcon } from '../components/ui/Icons';
 import placeholderImg from '../assets/placeholder.jpg';
 import { AddGameFromRawgModal } from '../components/game/AddGameFromRawgModal';
 
@@ -122,13 +122,22 @@ export function SearchPage() {
             
             {/* CABECERA Y BUSCADOR */}
             <header className="bg-gray-900/40 p-6 md:p-8 rounded-2xl border border-gray-800 shadow-2xl flex flex-col gap-6">
-                <div>
-                    <h1 className="text-4xl font-black uppercase tracking-tighter text-primary mb-2">
-                        RADAR SEARCH
-                    </h1>
-                    <p className="text-sm text-gray-200 font-medium">
-                        Connect to the RAWG database. Calibrate your sensors and scan for new additions.
-                    </p>
+                <div className="flex gap-4 items-start">
+                    <button 
+                        onClick={() => navigate(-1)}
+                        className="p-2 h-fit text-gray-400 hover:text-white hover:bg-gray-800 rounded-full transition-colors outline-none shrink-0 mt-0.5"
+                        title="Go back"
+                    >
+                        <ArrowLeftIcon className="w-6 h-6" />
+                    </button>
+                    <div>
+                        <h1 className="text-4xl font-black uppercase tracking-tighter text-primary mb-2 m-0">
+                            RADAR SEARCH
+                        </h1>
+                        <p className="text-sm text-gray-200 font-medium ">
+                            Connect to the RAWG database. Calibrate your sensors and scan for new additions.
+                        </p>
+                    </div>
                 </div>
 
                 <form onSubmit={handleSearch} className="space-y-4">
@@ -273,5 +282,5 @@ export function SearchPage() {
                 onSave={handleConfirmSave}
             />
         </div>
-    ); // <-- Este es el final de la función SearchPage
+    ); 
 }

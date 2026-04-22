@@ -6,8 +6,8 @@ import { TagInput } from '../components/ui/TagInput';
 import { ActionMenu } from '../components/ui/ActionMenu/ActionMenu';
 import { STATUS_LIST, PLATFORM_LIST } from '../utils/constants';
 import type { GameStatus } from '../types/game';
-import { PlusIcon } from '../components/ui/Icons';
 import placeholderImg from '../assets/placeholder.jpg';
+import { PlusIcon, ArrowLeftIcon } from '../components/ui/Icons';
 
 // constante para la imagen por defecto
 const DEFAULT_COVER_URL = placeholderImg;
@@ -73,23 +73,26 @@ export function AddGamePage() {
         <div className="max-w-7xl mx-auto space-y-8 animate-in fade-in duration-500">
             
             {/* CABECERA */}
-            <header className="flex justify-between items-center border-b border-gray-800 pb-6 gap-4">
-                <h1 className="text-4xl font-black uppercase tracking-tighter text-text">
-                    ADD NEW GAME
-                </h1>
+            <header className="flex flex-col md:flex-row justify-between items-center border-b border-gray-800 pb-6 gap-4">
+                <div className="flex items-center gap-4 w-full md:w-auto">
+                    <button 
+                        onClick={() => navigate(-1)}
+                        className="p-2 text-gray-400 hover:text-white hover:bg-gray-800 rounded-full transition-colors outline-none shrink-0"
+                        title="Go back"
+                    >
+                        <ArrowLeftIcon className="w-6 h-6" />
+                    </button>
+                    <h1 className="text-4xl font-black uppercase tracking-tighter text-text text-center md:text-left m-0 truncate">
+                        ADD NEW GAME
+                    </h1>
+                </div>
                 
-                <div className="flex gap-2">
+                <div className="flex gap-2 shrink-0">
                     {/* botón de guardar */}
                     <Button onClick={handleSubmit} variant="primary">
                         <span className="flex items-center justify-center gap-2">
                             <PlusIcon className="w-5 h-5" />
                             Create Game
-                        </span>
-                    </Button>
-                    {/* botón de cancelar */}
-                    <Button onClick={() => navigate('/library')} variant="danger">
-                        <span className="flex items-center justify-center gap-2">
-                            Cancel
                         </span>
                     </Button>
                 </div>
