@@ -9,7 +9,6 @@ import { EmptyState } from '../components/ui/EmptyState';
 import { Button } from '../components/ui/Button';
 import { ActionMenu } from '../components/ui/ActionMenu/ActionMenu';
 import { Modal, type ModalButton } from '../components/ui/Modal'; 
-import { PLATFORM_LIST } from '../utils/constants';
 import type { Game } from '../types/game';
 import { TrashIcon, SearchIcon, PlusIcon } from '../components/ui/Icons';
 import { Spinner } from '../components/ui/Spinner';
@@ -27,6 +26,7 @@ export function WishlistPage() {
     // le pasa solo los juegos de la wishlist al motor de filtros
     const {
         filteredGames,
+        availablePlatforms,
         availableGenres,
         searchQuery, setSearchQuery,
         sortOption, setSortOption,
@@ -158,9 +158,9 @@ export function WishlistPage() {
                                 {genreFilter === 'all' ? 'All' : genreFilter}
                             </ActionMenu.Button>
                             <ActionMenu.Overlay>
-
+                                
                                 <ActionMenu.Search />
-
+                                
                                 <ActionMenu.Item value="all">All</ActionMenu.Item>
                                 {availableGenres.length === 0 ? (
                                     <div className="px-4 py-3 text-xs text-gray-300 italic text-center">Genres not found</div>
@@ -181,13 +181,19 @@ export function WishlistPage() {
                                 {platformFilter === 'all' ? 'All' : platformFilter}
                             </ActionMenu.Button>
                             <ActionMenu.Overlay>
-
+                                
                                 <ActionMenu.Search />
                                 
                                 <ActionMenu.Item value="all">All</ActionMenu.Item>
-                                {PLATFORM_LIST.map(p => (
-                                    <ActionMenu.Item key={p} value={p}>{p}</ActionMenu.Item>
-                                ))}
+                                <ActionMenu.Item value="Not specified">Not specified</ActionMenu.Item> {/* <-- Opción para sin asignar */}
+                                
+                                {availablePlatforms.length === 0 ? (
+                                    <div className="px-4 py-3 text-xs text-gray-300 italic text-center">No platforms found</div>
+                                ) : (
+                                    availablePlatforms.map(p => (
+                                        <ActionMenu.Item key={p} value={p}>{p}</ActionMenu.Item>
+                                    ))
+                                )}
                             </ActionMenu.Overlay>
                         </ActionMenu>
                     </div>
