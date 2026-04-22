@@ -7,10 +7,25 @@ export function HomePage() {
     const { games } = useLibrary();
 
     // filtra los juegos que están en estado playing
-    // los ordena por la fecha de última actualización y se queda con los 3 primeros
+    // determina la fecha más reciente (añadido o actualizado) para cada juego y los ordena
     const playing = games
         .filter(g => g.status === 'Playing')
-        .sort((a, b) => new Date(b.updatedAt || 0).getTime() - new Date(a.updatedAt || 0).getTime())
+        .sort((a, b) => {
+            // obtiene el timestamp más reciente para el juego A
+            const lastActivityA = Math.max(
+                new Date(a.updatedAt || 0).getTime(),
+                new Date(a.addedAt || 0).getTime()
+            );
+            
+            // obtiene el timestamp más reciente para el juego B
+            const lastActivityB = Math.max(
+                new Date(b.updatedAt || 0).getTime(),
+                new Date(b.addedAt || 0).getTime()
+            );
+            
+            // ordena de más reciente a más antiguo
+            return lastActivityB - lastActivityA;
+        })
         .slice(0, 3);
 
     // filtra los juegos que están en estado wishlist
