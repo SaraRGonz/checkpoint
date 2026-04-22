@@ -22,11 +22,19 @@ export function GameDetailPage() {
     // estado de modales
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+    
+    // estados para la imagen
     const [tempImageUrl, setTempImageUrl] = useState('');
+    const [imageError, setImageError] = useState<string | null>(null); //
 
     // sincronizar URL temporal cuando se abre el modal
     useEffect(() => {
-        if (draft) setTempImageUrl(draft.coverUrl);
+        if (draft) {
+            // si la imagen actual es el placeholder o contiene la ruta mostramos el input vacío
+            const isPlaceholder = draft.coverUrl === placeholderImg || draft.coverUrl.includes('placeholder');
+            setTempImageUrl(isPlaceholder ? '' : draft.coverUrl);
+            setImageError(null); // resetea errores al abrir
+        }
     }, [isImageModalOpen, draft]);
 
     if (isLoading || !game || !draft) return <div className="p-20 flex justify-center"><Spinner /></div>;
@@ -39,8 +47,30 @@ export function GameDetailPage() {
     };
 
     const handleSaveImage = () => {
-        updateDraftField('coverUrl', tempImageUrl);
-        setIsImageModalOpen(false);
+        const finalUrl = tempImageUrl.trim();
+
+        // si el usuario deja el campo vacío, asigna el placeholder automáticamente
+        if (finalUrl === '') {
+            updateDraftField('coverUrl', placeholderImg);
+            setIsImageModalOpen(false);
+            return;
+        }
+
+        // validación estricta de formato URL
+        try {
+            const url = new URL(finalUrl);
+            if (url.protocol !== 'http:' && url.protocol !== 'https:') {
+                throw new Error('Invalid protocol');
+            }
+            
+            // si todo está bien guarda la nueva URL
+            updateDraftField('coverUrl', finalUrl);
+            setImageError(null);
+            setIsImageModalOpen(false);
+        } catch (_) {
+            // bloquea el guardado y muestra el error
+            setImageError('Please enter a valid link for the image (e.g., https://...)');
+        }
     };
 
     // configuración de los botones del modal
@@ -108,16 +138,24 @@ export function GameDetailPage() {
                             className="w-full bg-gray-950 border border-gray-700 p-3 rounded-lg text-sm text-gray-200 focus:border-primary outline-none transition-all"
                             placeholder="https://..."
                         />
+                        {imageError && (
+                            <p className="text-danger text-xs font-bold mt-1 animate-in fade-in zoom-in duration-200">
+                                {imageError}
+                            </p>
+                        )}
                     </div>
                     <div className="pt-2">
                         <p className="text-[10px] uppercase text-gray-600 font-bold mb-3 tracking-[0.2em] text-center">Preview</p>
                         <div className="w-32 mx-auto aspect-3/4 rounded-xl overflow-hidden border-2 border-gray-700 shadow-2xl bg-gray-950">
                             <img 
-                                src={tempImageUrl} 
+                                // pone el placeholder en la preview si el input está vacío, si no intenta cargar la URL
+                                src={tempImageUrl.trim() === '' ? placeholderImg : tempImageUrl} 
                                 alt="Preview" 
                                 className="w-full h-full object-cover" 
+                                // si la URL tiene formato válido pero la imagen está rota, carga el placeholder visualmente
                                 onError={(e) => (e.currentTarget.src = placeholderImg)} 
-                            />                        </div>
+                            />
+                        </div>
                     </div>
                 </div>
             </Modal>
