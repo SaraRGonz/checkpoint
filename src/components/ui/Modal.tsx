@@ -16,9 +16,10 @@ interface ModalProps {
     title: string;
     children: ReactNode;
     footerButtons?: ModalButton[]; // prop opcional para los botones
+    closeIconClassName?: string;
 }
 
-export function Modal({ isOpen, onClose, title, children, footerButtons }: ModalProps) {
+export function Modal({ isOpen, onClose, title, children, footerButtons, closeIconClassName }: ModalProps) {
     useEffect(() => {
         const handleEsc = (e: KeyboardEvent) => {
             if (e.key === 'Escape') onClose();
@@ -32,7 +33,7 @@ export function Modal({ isOpen, onClose, title, children, footerButtons }: Modal
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70">
             <div 
-                className="bg-gray-800 rounded-lg shadow-xl w-full max-w-md border border-gray-700 overflow-hidden flex flex-col"
+                className="bg-gray-800 rounded-lg shadow-xl w-full max-w-md border border-gray-700 flex flex-col animate-in zoom-in-95 duration-200"
                 role="dialog"
                 aria-modal="true"
             >
@@ -41,7 +42,7 @@ export function Modal({ isOpen, onClose, title, children, footerButtons }: Modal
                     <h2 className="text-xl font-bold text-text">{title}</h2>
                     <button 
                         onClick={onClose}
-                        className="text-gray-400 hover:text-white transition-colors"
+                        className={closeIconClassName || "text-gray-400 hover:text-white transition-colors"}
                     >
                         <CrossIcon className="w-6 h-6" />
                     </button>

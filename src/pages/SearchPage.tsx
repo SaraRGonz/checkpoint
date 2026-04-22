@@ -12,6 +12,7 @@ import { RAWG_PLATFORMS, RAWG_GENRES } from '../utils/rawgConstants';
 import type { Game, GameStatus } from '../types/game';
 import { PlusIcon, HeartIcon, SearchIcon } from '../components/ui/Icons';
 import placeholderImg from '../assets/placeholder.jpg';
+import { AddGameFromRawgModal } from '../components/game/AddGameFromRawgModal';
 
 // generar últimos 50 años dinámicamente
 const currentYear = new Date().getFullYear();
@@ -26,6 +27,9 @@ export function SearchPage() {
     const [platform, setPlatform] = useState('');
     const [genre, setGenre] = useState('');
     const [year, setYear] = useState('');
+
+    const [selectedGame, setSelectedGame] = useState<Game | null>(null);
+    const [modalStatus, setModalStatus] = useState<GameStatus>('Queue');
 
     const [results, setResults] = useState<Game[]>([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -75,19 +79,27 @@ export function SearchPage() {
         }
     };
 
-    const handleSaveGame = async (game: Game, targetStatus: GameStatus) => {
+    // abre el modal con la configuración inicial
+    const openConfigureModal = (game: Game, targetStatus: GameStatus) => {
+        setSelectedGame(game);
+        setModalStatus(targetStatus);
+    };
+
+    // función que ejecuta el modal al confirmar
+    const handleConfirmSave = async (gameData: Omit<Game, 'id'>, navigateToDetails: boolean) => {
         try {
             setIsSaving(true);
-            const newGameId = await addGame({
-                title: game.title,
-                coverUrl: game.coverUrl,
-                platform: game.platform,
-                status: targetStatus,
-                releaseYear: game.releaseYear,
-                genres: game.genres,
-                rawgId: game.rawgId
-            });
-            navigate(`/game/${newGameId}`);
+            const newGameId = await addGame(gameData);
+            
+            setSelectedGame(null); // Cierra el modal
+            
+            if (navigateToDetails) {
+                navigate(`/game/${newGameId}`);
+            } else {
+                // Navegación dinámica según el status final seleccionado
+                if (gameData.status === 'Wishlist') navigate('/wishlist');
+                else navigate('/library');
+            }
         } catch (err: any) {
             alert(err.message || 'Error saving the game. Try again.');
         } finally {
@@ -228,28 +240,38 @@ export function SearchPage() {
                                     <div className="flex-1">
                                         <GameCard game={game} showDetails={false} disableLink={true} />
                                     </div>
-                                    
+    
                                     <div className="flex gap-2 items-stretch mt-auto opacity-90 group-hover:opacity-100 transition-opacity">
-                                        <Button variant="primary" onClick={() => handleSaveGame(game, 'Queue')} className="flex-1 h-full px-2">
+                                        <Button variant="primary" onClick={() => openConfigureModal(game, 'Queue')} className="flex-1 h-full px-2">
                                             <div className="flex items-center justify-center gap-1.5 text-xs py-1 h-full font-bold">
                                                 <PlusIcon className="w-4 h-4 shrink-0" />
                                                 <span>Library</span> 
                                             </div>
                                         </Button>
 
-                                        <Button variant="secondary" onClick={() => handleSaveGame(game, 'Wishlist')} className="flex-1 h-full px-2">
+                                        <Button variant="secondary" onClick={() => openConfigureModal(game, 'Wishlist')} className="flex-1 h-full px-2">
                                             <div className="flex items-center justify-center gap-1.5 text-xs text-text py-1 h-full font-bold">
                                                 <HeartIcon className="w-4 h-4 shrink-0" />
                                                 <span>Wishlist</span>
                                             </div>
                                         </Button>
                                     </div>
+
                                 </div>
                             ))}
                         </div>
                     )}
                 </>
             )}
+            {/* Modal de Configuración */}
+            <AddGameFromRawgModal 
+                isOpen={!!selectedGame}
+                onClose={() => setSelectedGame(null)}
+                game={selectedGame}
+                initialPlatformId={platform}
+                initialStatus={modalStatus}
+                onSave={handleConfirmSave}
+            />
         </div>
-    );
+    ); // <-- Este es el final de la función SearchPage
 }
