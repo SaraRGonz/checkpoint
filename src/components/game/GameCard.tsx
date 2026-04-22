@@ -44,6 +44,7 @@ export function GameCard({
                     src={game.coverUrl} 
                     alt={game.title} 
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    style={{ objectPosition: game.coverPosition || '50% 50%' }} // <-- NUEVO
                     loading="lazy"
                 />
                 {/* gradiente para que la imagen se mezcle con la tarjeta */}

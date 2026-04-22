@@ -12,6 +12,7 @@ const createGameSchema = z.object({
         platform: z.string().optional(),
         status: z.enum(['Wishlist', 'Queue', 'Playing', 'Completed', 'Dropped']),
         coverUrl: z.string().optional(),
+        coverPosition: z.string().optional(),
         rawgId: z.number().optional(),
         genres: z.array(z.string()).optional(),
         releaseYear: z.number().optional()
@@ -22,8 +23,13 @@ const updateGameSchema = z.object({
     body: z.object({
         status: z.enum(['Wishlist', 'Queue', 'Playing', 'Completed', 'Dropped']).optional(),
         platform: z.string().optional(),
-        rating: z.number().min(1).max(5).optional(),
-        review: z.string().optional()
+        rating: z.number().min(0).max(5).optional(),
+        review: z.string().optional(),
+        coverUrl: z.string().optional(), 
+        coverPosition: z.string().optional(),
+        title: z.string().min(1).optional(),
+        genres: z.array(z.string()).optional(),
+        releaseYear: z.number().optional()
     })
 });
 

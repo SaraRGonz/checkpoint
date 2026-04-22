@@ -6,6 +6,7 @@ export interface Game {
     rawgId?: number; // opcional porque si se añade a mano igual no tiene ID de RAWG
     title: string;
     coverUrl: string;
+    coverPosition?: string;
     platform?: string; 
     status: GameStatus; 
     rating?: number;

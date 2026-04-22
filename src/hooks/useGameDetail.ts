@@ -19,7 +19,8 @@ export function useGameDetail() {
     const toggleEdit = () => setIsEditing(!isEditing);
 
     const updateDraftField = (field: keyof Game, value: any) => {
-        if (draft) setDraft({ ...draft, [field]: value });
+        // usa 'prev' para asegurar que si se lanzan varios updates a la vez se encolen y no se sobreescriban entre ellos
+        setDraft(prev => prev ? { ...prev, [field]: value } : undefined);
     };
 
     const saveChanges = async () => {

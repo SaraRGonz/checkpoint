@@ -25,7 +25,8 @@ export function GameDetailPage() {
     
     // estados para la imagen
     const [tempImageUrl, setTempImageUrl] = useState('');
-    const [imageError, setImageError] = useState<string | null>(null); //
+    const [tempCoverPosition, setTempCoverPosition] = useState('50% 50%'); 
+    const [imageError, setImageError] = useState<string | null>(null);
 
     // sincronizar URL temporal cuando se abre el modal
     useEffect(() => {
@@ -33,6 +34,7 @@ export function GameDetailPage() {
             // si la imagen actual es el placeholder o contiene la ruta mostramos el input vacío
             const isPlaceholder = draft.coverUrl === placeholderImg || draft.coverUrl.includes('placeholder');
             setTempImageUrl(isPlaceholder ? '' : draft.coverUrl);
+            setTempCoverPosition(draft.coverPosition || '50% 50%');
             setImageError(null); // resetea errores al abrir
         }
     }, [isImageModalOpen, draft]);
@@ -65,6 +67,7 @@ export function GameDetailPage() {
             
             // si todo está bien guarda la nueva URL
             updateDraftField('coverUrl', finalUrl);
+            updateDraftField('coverPosition', tempCoverPosition); 
             setImageError(null);
             setIsImageModalOpen(false);
         } catch (_) {
@@ -153,10 +156,54 @@ export function GameDetailPage() {
                                 src={tempImageUrl.trim() === '' ? placeholderImg : tempImageUrl} 
                                 alt="Preview" 
                                 className="w-full h-full object-cover" 
+                                style={{ objectPosition: tempCoverPosition }}
                                 // si la URL tiene formato válido pero la imagen está rota, carga el placeholder visualmente
                                 onError={(e) => (e.currentTarget.src = placeholderImg)} 
                             />
                         </div>
+                        {/* CONTROLES DE RECORTE (PAN & TILT) */}
+                        {tempImageUrl.trim() !== '' && (
+                            <div className="mt-6 space-y-4">
+                                {/* Extraemos los valores actuales de "X% Y%" para usarlos en ambas barras */}
+                                {(() => {
+                                    const [x, y] = tempCoverPosition.split(' ');
+                                    const currentX = parseInt(x || '50');
+                                    const currentY = parseInt(y || '50');
+
+                                    return (
+                                        <>
+                                            {/* Slider Horizontal (Para imágenes de RAWG / 16:9) */}
+                                            <div>
+                                                <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest flex justify-between">
+                                                    <span>Horizontal Pan</span>
+                                                    <span>{currentX}%</span>
+                                                </label>
+                                                <input 
+                                                    type="range" min="0" max="100" 
+                                                    value={currentX}
+                                                    onChange={(e) => setTempCoverPosition(`${e.target.value}% ${currentY}%`)}
+                                                    className="w-full mt-2 accent-primary"
+                                                />
+                                            </div>
+
+                                            {/* Slider Vertical (Para carátulas originales altas) */}
+                                            <div>
+                                                <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest flex justify-between">
+                                                    <span>Vertical Pan</span>
+                                                    <span>{currentY}%</span>
+                                                </label>
+                                                <input 
+                                                    type="range" min="0" max="100" 
+                                                    value={currentY}
+                                                    onChange={(e) => setTempCoverPosition(`${currentX}% ${e.target.value}%`)}
+                                                    className="w-full mt-2 accent-primary"
+                                                />
+                                            </div>
+                                        </>
+                                    );
+                                })()}
+                            </div>
+                        )}
                     </div>
                 </div>
             </Modal>
