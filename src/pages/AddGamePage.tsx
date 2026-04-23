@@ -19,6 +19,7 @@ export function AddGamePage() {
     // estado local para todos los campos 
     const [title, setTitle] = useState('');
     const [coverUrl, setCoverUrl] = useState(DEFAULT_COVER_URL);
+    const [coverPosition, setCoverPosition] = useState('50% 50%');
     const [platform, setPlatform] = useState('');
     const [status, setStatus] = useState<GameStatus>('Queue');
     const [releaseYear, setReleaseYear] = useState<number | ''>('');
@@ -55,6 +56,7 @@ export function AddGamePage() {
             const newGameId = await addGame({
             title,
             coverUrl: coverUrl.trim() === '' ? DEFAULT_COVER_URL : coverUrl,
+            coverPosition,
             platform: platform === '' ? undefined : platform,
             status,
             releaseYear: releaseYear === '' ? undefined : releaseYear, // evita enviar null
@@ -115,6 +117,7 @@ export function AddGamePage() {
                             src={coverUrl} 
                             alt="Cover Preview" 
                             className="w-full h-full object-cover transition-opacity" 
+                            style={{ objectPosition: coverPosition }}
                             onError={(e) => e.currentTarget.src = DEFAULT_COVER_URL}
                         />
                     </div>
@@ -130,6 +133,49 @@ export function AddGamePage() {
                             className="w-full bg-gray-950 border border-gray-700 text-gray-300 text-xs p-2 rounded outline-none focus:border-primary transition-colors placeholder:text-gray-300"
                         />
                     </div>
+
+                    {/* CONTROLES DE RECORTE */}
+                    {coverUrl.trim() !== '' && coverUrl !== DEFAULT_COVER_URL && (
+                        <div className="mt-6 space-y-4 pt-6 border-t border-gray-800">
+                            {(() => {
+                                const [x, y] = coverPosition.split(' ');
+                                const currentX = parseInt(x || '50');
+                                const currentY = parseInt(y || '50');
+
+                                return (
+                                    <>
+                                        {/* slider horizontal */}
+                                        <div>
+                                            <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest flex justify-between">
+                                                <span>Horizontal Pan</span>
+                                                <span>{currentX}%</span>
+                                            </label>
+                                            <input 
+                                                type="range" min="0" max="100" 
+                                                value={currentX}
+                                                onChange={(e) => setCoverPosition(`${e.target.value}% ${currentY}%`)}
+                                                className="w-full mt-2 accent-primary"
+                                            />
+                                        </div>
+
+                                        {/* slider vertical */}
+                                        <div>
+                                            <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest flex justify-between">
+                                                <span>Vertical Pan</span>
+                                                <span>{currentY}%</span>
+                                            </label>
+                                            <input 
+                                                type="range" min="0" max="100" 
+                                                value={currentY}
+                                                onChange={(e) => setCoverPosition(`${currentX}% ${e.target.value}%`)}
+                                                className="w-full mt-2 accent-primary"
+                                            />
+                                        </div>
+                                    </>
+                                );
+                            })()}
+                        </div>
+                    )}
                 </div>
 
                 {/* columna derecha información base */}
