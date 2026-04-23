@@ -8,12 +8,25 @@ import { EmptyState } from '../components/ui/EmptyState';
 import { Button } from '../components/ui/Button';
 import { ActionMenu } from '../components/ui/ActionMenu/ActionMenu';
 import { STATUS_LIST } from '../utils/constants';
-import { SearchIcon, PlusIcon } from '../components/ui/Icons';
+import { SearchIcon, PlusIcon, GridIcon, KanbanIcon } from '../components/ui/Icons';
 import { Spinner } from '../components/ui/Spinner';
+import { useState, useEffect } from 'react';
+import { KanbanBoard } from '../components/game/KanbanBoard';
 
 export function LibraryPage() {
     const { games, isLoading } = useLibrary();
     const navigate = useNavigate();
+    
+    // inicializa leyendo la preferencia guardada si existe
+    const [viewMode, setViewMode] = useState<'grid' | 'kanban'>(() => {
+        const savedMode = localStorage.getItem('libraryViewMode');
+        return savedMode === 'kanban' ? 'kanban' : 'grid';
+    });
+    // cada vez que viewMode cambie lo guarda en el navegador
+    useEffect(() => {
+        localStorage.setItem('libraryViewMode', viewMode);
+    }, [viewMode]);
+
 
     // excluye los juegos con estado wishlist
     const libraryGames = games.filter(g => g.status !== 'Wishlist');
@@ -101,6 +114,29 @@ export function LibraryPage() {
                     </ActionMenu>
                 </div>
 
+                {/* VIEW MODE */}
+                <div className="flex flex-col gap-1.5 w-full">
+                    <label className="text-[10px] font-bold text-gray-300 uppercase tracking-widest">View Mode</label>
+                    <div className="flex gap-2 bg-gray-950 p-1 rounded-lg border border-gray-800">
+                        <button 
+                            onClick={() => setViewMode('grid')}
+                            className={`flex-1 py-1.5 flex justify-center items-center rounded-md transition-colors 
+                                ${viewMode === 'grid' ? 'bg-gray-800 text-primary' : 'text-gray-500 hover:text-gray-300'}`}
+                            title="Grid View"
+                        >
+                            <GridIcon className="w-5 h-5" />
+                        </button>
+                        <button 
+                            onClick={() => setViewMode('kanban')}
+                            className={`flex-1 py-1.5 flex justify-center items-center rounded-md transition-colors 
+                                ${viewMode === 'kanban' ? 'bg-gray-800 text-primary' : 'text-gray-500 hover:text-gray-300'}`}
+                            title="Kanban View"
+                        >
+                            <KanbanIcon className="w-5 h-5" />
+                        </button>
+                    </div>
+                </div>
+
                 <hr className="border-gray-800" />
 
                 {/* título filters */}
@@ -166,7 +202,7 @@ export function LibraryPage() {
                                 <ActionMenu.Search />
                                 
                                 <ActionMenu.Item value="all">All</ActionMenu.Item>
-                                <ActionMenu.Item value="Not specified">Not specified</ActionMenu.Item> {/* <-- Opción para sin asignar */}
+                                <ActionMenu.Item value="Not specified">Not specified</ActionMenu.Item> 
                                 
                                 {availablePlatforms.length === 0 ? (
                                     <div className="px-4 py-3 text-xs text-gray-300 italic text-center">No platforms found</div>
@@ -199,7 +235,7 @@ export function LibraryPage() {
             </aside>
 
             {/* grid */}
-            <main className="flex-1 w-full">
+            <main className="flex-1 w-full min-w-0"> 
                 {filteredGames.length === 0 ? (
                     /* hay juegos pero ninguno coincide con los filtros */
                     <EmptyState 
@@ -208,11 +244,15 @@ export function LibraryPage() {
                         onClick={clearFilters}
                         clickText="Respawn Filters"
                     />
-                ) : (
+                ) : viewMode === 'grid' ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6 animate-in fade-in duration-500">
                         {filteredGames.map(game => (
                             <GameCard key={game.id} game={game} />
                         ))}
+                    </div>
+                ) : (
+                    <div className="animate-in fade-in duration-500">
+                        <KanbanBoard games={filteredGames} />
                     </div>
                 )}
             </main>

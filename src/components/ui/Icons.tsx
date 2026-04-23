@@ -184,3 +184,26 @@ export function ArrowLeftIcon(props: IconProps) {
         </svg>
     );
 }
+
+// icono de cuadrícula (grid)
+export function GridIcon(props: IconProps) {
+    return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" {...props}>
+            <rect x="3" y="3" width="7" height="7" rx="1" />
+            <rect x="14" y="3" width="7" height="7" rx="1" />
+            <rect x="14" y="14" width="7" height="7" rx="1" />
+            <rect x="3" y="14" width="7" height="7" rx="1" />
+        </svg>
+    );
+}
+
+// icono de columnas (kanban)
+export function KanbanIcon(props: IconProps) {
+    return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" {...props}>
+            <rect x="3" y="3" width="5" height="18" rx="1" />
+            <rect x="9.5" y="3" width="5" height="12" rx="1" />
+            <rect x="16" y="3" width="5" height="15" rx="1" />
+        </svg>
+    );
+}

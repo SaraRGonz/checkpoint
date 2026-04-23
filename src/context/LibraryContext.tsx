@@ -80,20 +80,30 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
 
     // actualizar juego (PUT)
     const updateGame = async (id: string, updates: Partial<Game>) => {
+        // guarda el estado exacto por si la petición falla (rollback)
+        const previousGames = [...games];
+        
         try {
             setError(null);
-            // avisa al servidor del cambio y devuelve el objeto juego actualizado
+
+            // actualización optimista que actualiza el juego al instante
+            setGames((prevGames) => 
+                prevGames.map(game => game.id === id ? { ...game, ...updates } : game)
+            );
+
+            // avisa al servidor en segundo plano
             const updatedGame = await libraryApi.updateGameInLibrary(id, updates);
 
-            // .map() recorre el array. Si el ID coincide inyecta la respuesta del servidor (updatedGame)
-            // si no coincide mantiene el juego original sin cambios
+            // si el servidor devuelve campos nuevos (ej: updatedAt) se inyectan
             setGames((prevGames) => 
                 prevGames.map(game => game.id === id ? updatedGame : game)
             );
         } catch (err: any) {
+            // si el internet falla o el servidor da error, deshace la actualización
+            setGames(previousGames);
             setError(err.message || 'Error al actualizar el juego');
             throw err;
-        } 
+        }
     };
 
     // borrar juego (DELETE)
