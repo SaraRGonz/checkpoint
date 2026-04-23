@@ -1,4 +1,4 @@
-import { env } from '../config/env'; // <-- Importamos la configuración
+import { env } from '../config/env';
 
 const API_KEY = env.RAWG_API_KEY;
 const BASE_URL = 'https://api.rawg.io/api';
@@ -25,7 +25,8 @@ export const searchGames = async (query: string, platform?: string, genre?: stri
         title: game.name,
         coverUrl: game.background_image,
         releaseYear: game.released ? parseInt(game.released.split('-')[0]) : undefined,
-        genres: game.genres.map((g: any) => g.name)
+        genres: game.genres.map((g: any) => g.name),
+        platforms: game.platforms ? game.platforms.map((p: any) => p.platform.name) : []
     }));
 };
 

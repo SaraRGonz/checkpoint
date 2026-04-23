@@ -3,11 +3,12 @@ export type GameStatus = 'Wishlist' | 'Queue' | 'Playing' | 'Completed' | 'Dropp
 
 export interface Game {
     id: string;
-    rawgId?: number; // opcional porque si se añade a mano igual no tiene ID de RAWG
+    rawgId?: number; 
     title: string;
     coverUrl: string;
     coverPosition?: string;
-    platform?: string; 
+    platform?: string;
+    availablePlatforms?: string[]; 
     status: GameStatus; 
     rating?: number;
     review?: string;

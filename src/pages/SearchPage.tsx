@@ -13,6 +13,7 @@ import type { Game, GameStatus } from '../types/game';
 import { PlusIcon, HeartIcon, SearchIcon, ArrowLeftIcon } from '../components/ui/Icons';
 import placeholderImg from '../assets/placeholder.jpg';
 import { AddGameFromRawgModal } from '../components/game/AddGameFromRawgModal';
+import { RawgPreviewModal } from '../components/game/RawgPreviewModal';
 
 // generar últimos 50 años dinámicamente
 const currentYear = new Date().getFullYear();
@@ -30,6 +31,7 @@ export function SearchPage() {
 
     const [selectedGame, setSelectedGame] = useState<Game | null>(null);
     const [modalStatus, setModalStatus] = useState<GameStatus>('Queue');
+    const [previewGame, setPreviewGame] = useState<Game | null>(null);
 
     const [results, setResults] = useState<Game[]>([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -63,7 +65,8 @@ export function SearchPage() {
                 rawgId: rawg.rawgId,
                 title: rawg.title,
                 coverUrl: rawg.coverUrl || placeholderImg,
-                platform: undefined, 
+                platform: undefined,
+                availablePlatforms: rawg.platforms, 
                 status: 'Wishlist', 
                 releaseYear: rawg.releaseYear,
                 genres: rawg.genres,
@@ -91,12 +94,12 @@ export function SearchPage() {
             setIsSaving(true);
             const newGameId = await addGame(gameData);
             
-            setSelectedGame(null); // Cierra el modal
+            setSelectedGame(null); // cierra el modal
             
             if (navigateToDetails) {
                 navigate(`/game/${newGameId}`);
             } else {
-                // Navegación dinámica según el status final seleccionado
+                // navegación dinámica según el status final seleccionado
                 if (gameData.status === 'Wishlist') navigate('/wishlist');
                 else navigate('/library');
             }
@@ -247,7 +250,12 @@ export function SearchPage() {
                             {results.map(game => (
                                 <div key={game.id} className="flex flex-col gap-3 h-full bg-gray-900/40 p-3 rounded-2xl border border-gray-800 shadow-xl group hover:border-gray-700 transition-colors">
                                     <div className="flex-1">
-                                        <GameCard game={game} showDetails={false} disableLink={true} />
+                                        <GameCard 
+                                            game={game} 
+                                            showDetails={false} 
+                                            disableLink={true} 
+                                            onClick={() => setPreviewGame(game)}  
+                                        />
                                     </div>
     
                                     <div className="flex gap-2 items-stretch mt-auto opacity-90 group-hover:opacity-100 transition-opacity">
@@ -272,7 +280,7 @@ export function SearchPage() {
                     )}
                 </>
             )}
-            {/* Modal de Configuración */}
+            {/* Modal de configuración */}
             <AddGameFromRawgModal 
                 isOpen={!!selectedGame}
                 onClose={() => setSelectedGame(null)}
@@ -280,6 +288,13 @@ export function SearchPage() {
                 initialPlatformId={platform}
                 initialStatus={modalStatus}
                 onSave={handleConfirmSave}
+            />
+
+            {/* Modal de previsualización */}
+            <RawgPreviewModal 
+                isOpen={!!previewGame}
+                onClose={() => setPreviewGame(null)}
+                game={previewGame}
             />
         </div>
     ); 

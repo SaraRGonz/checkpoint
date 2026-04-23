@@ -4,6 +4,7 @@ export interface RawgSearchResult {
     coverUrl: string;
     releaseYear?: number;
     genres: string[];
+    platforms?: string[];
 }
 
 export interface SearchResponse {

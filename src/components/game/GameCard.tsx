@@ -7,13 +7,15 @@ interface GameCardProps {
     showDetails?: boolean; // opcional para ocultar los detalles cuando se está buscando un juego
     hideBadge?: boolean;
     disableLink?: boolean; // para desactivar la navegación en search page
+    onClick?: () => void;
 }
 
 export function GameCard({ 
     game, 
     showDetails = true, 
     hideBadge = false, 
-    disableLink = false 
+    disableLink = false,
+    onClick
 }: GameCardProps) {
 
     // limitar los géneros y poner ... si hay más de dos
@@ -30,7 +32,7 @@ export function GameCard({
 
     // guarda las clases CSS del contenedor para no repetirlas 
     const hoverEffects = disableLink 
-            ? "" 
+            ? (onClick ? "cursor-pointer hover:border-primary transition-colors" : "") 
             : "hover:border-primary hover:shadow-xl hover:shadow-primary/5 group";
 
     const containerClasses = `flex flex-col bg-gray-900 border border-gray-800 rounded-xl overflow-hidden transition-all duration-300 h-full ${hoverEffects}`;
@@ -44,8 +46,7 @@ export function GameCard({
                     src={game.coverUrl} 
                     alt={game.title} 
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    style={{ objectPosition: game.coverPosition || '50% 50%' }} // <-- NUEVO
-                    loading="lazy"
+                    style={{ objectPosition: game.coverPosition || '50% 50%' }} 
                 />
                 {/* gradiente para que la imagen se mezcle con la tarjeta */}
                 <div className="absolute inset-0 bg-linear-to-t from-gray-900 via-transparent to-transparent opacity-80" />
@@ -88,7 +89,7 @@ export function GameCard({
     // renderizado condicional por si es un enlace o un simple div
     if (disableLink) {
         return (
-            <div className={containerClasses}>
+            <div className={containerClasses} onClick={onClick} role={onClick ? "button" : undefined}>
                 {cardContent}
             </div>
         );
