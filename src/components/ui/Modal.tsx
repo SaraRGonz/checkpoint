@@ -8,6 +8,7 @@ export interface ModalButton {
     content: string;
     variant?: 'primary' | 'secondary' | 'danger'; // usa las variantes de Button.tsx
     onClick?: () => void;
+    disabled?: boolean;
 }
 
 interface ModalProps {

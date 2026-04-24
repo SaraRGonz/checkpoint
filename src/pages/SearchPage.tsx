@@ -89,24 +89,17 @@ export function SearchPage() {
     };
 
     // función que ejecuta el modal al confirmar
-    const handleConfirmSave = async (gameData: Omit<Game, 'id'>, navigateToDetails: boolean) => {
+    const handleConfirmSave = async (gameData: Omit<Game, 'id'>): Promise<string | null> => {
         try {
             setIsSaving(true);
             const newGameId = await addGame(gameData);
-            
-            setSelectedGame(null); // cierra el modal
-            
-            if (navigateToDetails) {
-                navigate(`/game/${newGameId}`);
-            } else {
-                // navegación dinámica según el status final seleccionado
-                if (gameData.status === 'Wishlist') navigate('/wishlist');
-                else navigate('/library');
-            }
+            return newGameId; 
         } catch (err: any) {
             alert(err.message || 'Error saving the game. Try again.');
+            return null; 
         } finally {
             setIsSaving(false);
+
         }
     };
 
@@ -267,7 +260,7 @@ export function SearchPage() {
                                         </Button>
 
                                         <Button variant="secondary" onClick={() => openConfigureModal(game, 'Wishlist')} className="flex-1 h-full px-2">
-                                            <div className="flex items-center justify-center gap-1.5 text-xs text-text py-1 h-full font-bold">
+                                            <div className="flex items-center justify-center gap-1.5 text-xs py-1 h-full font-bold">
                                                 <HeartIcon className="w-4 h-4 shrink-0" />
                                                 <span>Wishlist</span>
                                             </div>
